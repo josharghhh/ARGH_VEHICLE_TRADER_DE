@@ -1,0 +1,25 @@
+GameProject {
+ ID "ARGHAmbientVehiclePlugin"
+ GUID "686A96CE03A95D30"
+ TITLE "ARGH-AmbientVehiclePlugin"
+ Dependencies {
+  "58D0FB3206B6F859" "66F0560F1BDE732A" "66B2F0B008DC590F" "66A8C33421A72540"
+ }
+ Configurations {
+  GameProjectConfig PC {
+   ChimeraGlobalConfig ChimeraGlobalConfig "{6F12664687156A7B}" {
+    DefaultPlayerController "{225E51284CC95CFA}Prefabs/Characters/Core/DefaultPlayerControllerMP.et"
+   }
+  }
+  GameProjectConfig XBOX_ONE {
+  }
+  GameProjectConfig XBOX_SERIES {
+  }
+  GameProjectConfig PS4 {
+  }
+  GameProjectConfig PS5 {
+  }
+  GameProjectConfig HEADLESS {
+  }
+ }
+}

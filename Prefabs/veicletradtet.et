@@ -1,0 +1,44 @@
+GenericEntity : "{D006AF3CDC85BBA9}Prefabs/Structures/Signs/Warnings/SignNoEntryVehicle_01_pole.et" {
+ ID "50D67C36F4200F97"
+ components {
+  GRP_VehicleDealerComponent "{686AB9D26584002B}" {
+   m_sDealerConfigPath "{A4C3C7A4D1E8F2B0}Configs/Systems/GRP_VehicleDealer_Vehicles.conf"
+   m_sSpawnPointEntityName ""
+   m_bForceOverlayUI 0
+  }
+  RplComponent "{3D5E1E8C10D4B5B8}" {
+  }
+  ActionsManagerComponent "{6C54C3C6B2F5C4A2}" {
+   ActionContexts {
+    UserActionContext "{6C54C3C6B2F5C4A3}" {
+     ContextName "InteractionPoint"
+     Position PointInfo "{6C54C3C6B2F5C4A4}" {
+      Offset 0 0.15 0.1
+     }
+    }
+    UserActionContext "{8B98B8B3A9A4EF1A}" {
+     ContextName "default"
+     Position PointInfo "{8B98B8B3A9A4EF1B}" {
+      Offset 0 0.15 0.1
+     }
+    }
+   }
+   additionalActions {
+    GRP_OpenVehicleDealerAction "{6C54C3C6B2F5C4A5}" {
+     ParentContextList {
+      "InteractionPoint"
+      "default"
+     }
+     UIInfo UIInfo "{6C54C3C6B2F5C4A6}" {
+      Name "Open Vehicle Dealer"
+     }
+     ActionTitle "Open Vehicle Dealer"
+     VisibilityRange 5
+     Duration 0
+    }
+   }
+  }
+ }
+ coords 125.043 0.118 130.491
+ angles 0 90 0
+}

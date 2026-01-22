@@ -1,0 +1,58 @@
+ButtonWidgetClass {
+ Name "VehicleItemButton"
+ Slot LayoutSlot "{GRP-VD-ITEM-SLOT}" {
+  Padding 0 0 0 6
+ }
+ style blank
+ {
+  OverlayWidgetClass {
+   Name "VehicleItemOverlay"
+   Slot ButtonWidgetSlot {
+    HorizontalAlign 3
+    VerticalAlign 3
+   }
+   {
+    ImageWidgetClass {
+     Name "VehicleItemBg"
+     Slot OverlayWidgetSlot {
+      HorizontalAlign 3
+      VerticalAlign 3
+     }
+     Color 0.03 0.035 0.04 1
+    }
+    HorizontalLayoutWidgetClass {
+     Name "VehicleItemRow"
+     Slot OverlayWidgetSlot {
+      HorizontalAlign 3
+      VerticalAlign 3
+      Padding 10 6 10 6
+     }
+     {
+      TextWidgetClass {
+       Name "VehicleItemName"
+       Slot LayoutSlot {
+        SizeMode Fill
+        FillWeight 1
+        Padding 0 0 6 0
+       }
+       Color 0.85 0.85 0.85 1
+       Text "Vehicle"
+       "Font Size" 13
+      }
+      TextWidgetClass {
+       Name "VehicleItemPrice"
+       Slot LayoutSlot {
+        SizeMode Fill
+        FillWeight 0
+       }
+       Color 0.55 0.8 0.55 1
+       Text "$0"
+       "Font Size" 13
+       "Horizontal Alignment" Right
+      }
+     }
+    }
+   }
+  }
+ }
+}

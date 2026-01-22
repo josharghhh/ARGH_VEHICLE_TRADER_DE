@@ -1,0 +1,16 @@
+GenericEntity : "{2990AB9DCE64226B}Prefabs/trader.et" {
+ components {
+  GRP_VehicleDealerComponent "{0ED393C2E42B4D3C}" {
+   m_sSpawnPointEntityName "CARTRADER1"
+  }
+ }
+ coords 129.455 1.889 129.537
+ angles 0 -90 0
+}
+GenericEntity : "{D006AF3CDC85BBA9}Prefabs/VehicleTrader.et" {
+ coords 129.495 -0.427 129.536
+ angles 0 -90 0
+}
+GenericEntity CARTRADER1 : "{DD346352F0F30A7C}Prefabs/Systems/AmbientVehicles/AmbientVehicleSpawnpoint_Base.et" {
+ coords 132.202 1 125.254
+}

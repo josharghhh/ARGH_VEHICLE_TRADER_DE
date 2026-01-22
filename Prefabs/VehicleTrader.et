@@ -1,0 +1,27 @@
+GenericEntity : "{E58C42830756FF91}Prefabs/Structures/Signs/SignsWarning_Pole_Base.et" {
+ ID "50D67C36F4200F97"
+ components {
+  MeshObject "{54969A6AAAADA251}" {
+   Materials {
+    MaterialAssignClass "{686AB9D2090408CE}" {
+     SourceMaterial "Sign_Restrictive_NoEntryBothDir"
+     AssignedMaterial "{7FA41B9484BC9AAB}Assets/Structures/Signs/Warnings/Data/Sign_Restrictive_NoVehiclesExcepMoto_A.emat"
+    }
+    MaterialAssignClass "{686AB9D2090408B4}" {
+     SourceMaterial "Sign_Restrictive_NoEntryBothDir_MLOD"
+     AssignedMaterial "{D44A5F112BA7F203}Assets/Structures/Signs/Warnings/Data/Sign_Restrictive_NoVehiclesExcepMoto_A_MLOD.emat"
+    }
+   }
+  }
+  RigidBody "{54969A6AA8773997}" {
+   ResponseIndex "TinyDestructible"
+  }
+  SCR_DestructionMultiPhaseComponent "{5496C1EF00137501}" {
+   m_DestroySpawnObjects {
+    SCR_DebrisSpawnable "{686AB9D2090408AF}" {
+     m_eMaterialSoundType METAL_LIGHT
+    }
+   }
+  }
+ }
+}

@@ -1,0 +1,20 @@
+ButtonWidgetClass {
+ Name "CategoryButton"
+ Slot LayoutSlot "{GRP-VD-CAT-SLOT}" {
+  Padding 0 0 0 4
+ }
+ style blank
+ {
+  TextWidgetClass {
+   Name "CategoryText"
+   Slot ButtonWidgetSlot {
+    HorizontalAlign 0
+    VerticalAlign 3
+    Padding 8 6 8 6
+   }
+   Color 0.7 0.7 0.7 1
+   Text "Category"
+   "Font Size" 13
+  }
+ }
+}
