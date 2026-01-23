@@ -1,8 +1,8 @@
 GenericEntity : "{D006AF3CDC85BBA9}Prefabs/Structures/Signs/Warnings/SignNoEntryVehicle_01_pole.et" {
  ID "50D67C36F4200F97"
  components {
-  GRP_VehicleDealerComponent "{686AB9D26584002B}" {
-   m_sDealerConfigPath "{A4C3C7A4D1E8F2B0}Configs/Systems/GRP_VehicleDealer_Vehicles.conf"
+  ARGH_VehicleDealerComponent "{686AB9D26584002B}" {
+   m_sDealerConfigPath "{A4C3C7A4D1E8F2B0}Configs/Systems/ARGH_VehicleDealer_Vehicles.conf"
    m_sSpawnPointEntityName ""
    m_bForceOverlayUI 0
   }
@@ -24,7 +24,7 @@ GenericEntity : "{D006AF3CDC85BBA9}Prefabs/Structures/Signs/Warnings/SignNoEntry
     }
    }
    additionalActions {
-    GRP_OpenVehicleDealerAction "{6C54C3C6B2F5C4A5}" {
+    ARGH_OpenVehicleDealerAction "{6C54C3C6B2F5C4A5}" {
      ParentContextList {
       "InteractionPoint"
       "default"

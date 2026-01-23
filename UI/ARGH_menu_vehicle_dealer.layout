@@ -1,64 +1,64 @@
 FrameWidgetClass {
- Name "GRP_VehicleDealerMenuRoot"
- Slot FrameWidgetSlot "{GRP-VD-ROOT}" {
+ Name "ARGH_VehicleDealerMenuRoot"
+ Slot FrameWidgetSlot "{ARGH-VD-ROOT}" {
   Anchor 0 0 1 1
  }
  {
-  ImageWidgetClass "{GRP-VD-DIM}" {
+  ImageWidgetClass "{ARGH-VD-DIM}" {
    Name "DimBackground"
-   Slot FrameWidgetSlot "{GRP-VD-DIM-SLOT}" {
+   Slot FrameWidgetSlot "{ARGH-VD-DIM-SLOT}" {
     Anchor 0 0 1 1
    }
    Color 0 0 0 0.85
   }
-  FrameWidgetClass "{GRP-VD-DIALOG}" {
+  FrameWidgetClass "{ARGH-VD-DIALOG}" {
    Name "DialogFrame"
-   Slot FrameWidgetSlot "{GRP-VD-DIALOG-SLOT}" {
+   Slot FrameWidgetSlot "{ARGH-VD-DIALOG-SLOT}" {
     Anchor 0.1 0.1 0.9 0.9
    }
    {
-    ImageWidgetClass "{GRP-VD-BG}" {
+    ImageWidgetClass "{ARGH-VD-BG}" {
      Name "DialogBackground"
-     Slot FrameWidgetSlot "{GRP-VD-BG-SLOT}" {
+     Slot FrameWidgetSlot "{ARGH-VD-BG-SLOT}" {
       Anchor 0 0 1 1
       OffsetRight 0
       OffsetBottom 0
      }
      Color 0.02 0.024 0.028 0.98
     }
-    VerticalLayoutWidgetClass "{GRP-VD-MAIN}" {
+    VerticalLayoutWidgetClass "{ARGH-VD-MAIN}" {
      Name "MainLayout"
-     Slot FrameWidgetSlot "{GRP-VD-MAIN-SLOT}" {
+     Slot FrameWidgetSlot "{ARGH-VD-MAIN-SLOT}" {
       Anchor 0 0 1 1
       OffsetRight 0
       OffsetBottom 0
      }
      {
-      SizeLayoutWidgetClass "{GRP-VD-HEADER-SIZE}" {
+      SizeLayoutWidgetClass "{ARGH-VD-HEADER-SIZE}" {
        Name "HeaderSize"
-       Slot LayoutSlot "{GRP-VD-HEADER-SIZE-SLOT}" {
+       Slot LayoutSlot "{ARGH-VD-HEADER-SIZE-SLOT}" {
        }
        AllowHeightOverride 1
        HeightOverride 48
        {
-        OverlayWidgetClass "{GRP-VD-HEADER}" {
+        OverlayWidgetClass "{ARGH-VD-HEADER}" {
          Name "Header"
-         Slot AlignableSlot "{GRP-VD-HEADER-SLOT}" {
+         Slot AlignableSlot "{ARGH-VD-HEADER-SLOT}" {
           HorizontalAlign 3
           VerticalAlign 3
          }
          {
-          ImageWidgetClass "{GRP-VD-HEADER-BG}" {
+          ImageWidgetClass "{ARGH-VD-HEADER-BG}" {
            Name "HeaderBg"
-           Slot OverlayWidgetSlot "{GRP-VD-HEADER-BG-SLOT}" {
+           Slot OverlayWidgetSlot "{ARGH-VD-HEADER-BG-SLOT}" {
             HorizontalAlign 3
             VerticalAlign 3
            }
            Color 0.03 0.035 0.04 1
           }
-          TextWidgetClass "{GRP-VD-TITLE}" {
+          TextWidgetClass "{ARGH-VD-TITLE}" {
            Name "TitleText"
-           Slot OverlayWidgetSlot "{GRP-VD-TITLE-SLOT}" {
+           Slot OverlayWidgetSlot "{ARGH-VD-TITLE-SLOT}" {
             HorizontalAlign 3
             VerticalAlign 3
             Padding 16 0 0 0
@@ -69,18 +69,18 @@ FrameWidgetClass {
            "Horizontal Alignment" Left
            "Vertical Alignment" Center
           }
-          ButtonWidgetClass "{GRP-VD-CLOSE}" {
+          ButtonWidgetClass "{ARGH-VD-CLOSE}" {
            Name "CloseButton"
-           Slot OverlayWidgetSlot "{GRP-VD-CLOSE-SLOT}" {
+           Slot OverlayWidgetSlot "{ARGH-VD-CLOSE-SLOT}" {
             HorizontalAlign 2
             VerticalAlign 1
             Padding 0 8 16 0
            }
            style blank
            {
-            TextWidgetClass "{GRP-VD-CLOSE-TXT}" {
+            TextWidgetClass "{ARGH-VD-CLOSE-TXT}" {
              Name "CloseText"
-             Slot ButtonWidgetSlot "{GRP-VD-CLOSE-TXT-SLOT}" {
+             Slot ButtonWidgetSlot "{ARGH-VD-CLOSE-TXT-SLOT}" {
               HorizontalAlign 3
               VerticalAlign 3
              }
@@ -94,52 +94,52 @@ FrameWidgetClass {
         }
        }
       }
-      HorizontalLayoutWidgetClass "{GRP-VD-BODY}" {
+      HorizontalLayoutWidgetClass "{ARGH-VD-BODY}" {
        Name "BodyLayout"
-       Slot LayoutSlot "{GRP-VD-BODY-SLOT}" {
+       Slot LayoutSlot "{ARGH-VD-BODY-SLOT}" {
         SizeMode Fill
         FillWeight 1
        }
        {
-        SizeLayoutWidgetClass "{GRP-VD-CATS-SIZE}" {
+        SizeLayoutWidgetClass "{ARGH-VD-CATS-SIZE}" {
          Name "CategoriesSize"
-         Slot LayoutSlot "{GRP-VD-CATS-SIZE-SLOT}" {
+         Slot LayoutSlot "{ARGH-VD-CATS-SIZE-SLOT}" {
          }
          AllowWidthOverride 1
          WidthOverride 180
          {
-          OverlayWidgetClass "{GRP-VD-CATS}" {
+          OverlayWidgetClass "{ARGH-VD-CATS}" {
            Name "CategoriesPanel"
-           Slot AlignableSlot "{GRP-VD-CATS-SLOT}" {
+           Slot AlignableSlot "{ARGH-VD-CATS-SLOT}" {
             HorizontalAlign 3
             VerticalAlign 3
            }
            {
-            ImageWidgetClass "{GRP-VD-CATS-BG}" {
+            ImageWidgetClass "{ARGH-VD-CATS-BG}" {
              Name "CategoriesBg"
-             Slot OverlayWidgetSlot "{GRP-VD-CATS-BG-SLOT}" {
+             Slot OverlayWidgetSlot "{ARGH-VD-CATS-BG-SLOT}" {
               HorizontalAlign 3
               VerticalAlign 3
              }
              Color 0.025 0.03 0.035 1
             }
-            VerticalLayoutWidgetClass "{GRP-VD-CATS-LIST}" {
+            VerticalLayoutWidgetClass "{ARGH-VD-CATS-LIST}" {
              Name "CategoryList"
-             Slot OverlayWidgetSlot "{GRP-VD-CATS-LIST-SLOT}" {
+             Slot OverlayWidgetSlot "{ARGH-VD-CATS-LIST-SLOT}" {
               HorizontalAlign 3
               VerticalAlign 0
               Padding 8 8 8 8
              }
              {
-              ButtonWidgetClass "{GRP-VD-CAT-ALL}" {
+              ButtonWidgetClass "{ARGH-VD-CAT-ALL}" {
                Name "CategoryAll"
-               Slot LayoutSlot "{GRP-VD-CAT-ALL-SLOT}" {
+               Slot LayoutSlot "{ARGH-VD-CAT-ALL-SLOT}" {
                 Padding 0 0 0 4
                }
                {
-                TextWidgetClass "{GRP-VD-CAT-ALL-TXT}" {
+                TextWidgetClass "{ARGH-VD-CAT-ALL-TXT}" {
                  Name "CategoryAllText"
-                 Slot ButtonWidgetSlot "{GRP-VD-CAT-ALL-TXT-SLOT}" {
+                 Slot ButtonWidgetSlot "{ARGH-VD-CAT-ALL-TXT-SLOT}" {
                   HorizontalAlign 0
                   VerticalAlign 3
                   Padding 8 6 8 6
@@ -156,23 +156,23 @@ FrameWidgetClass {
           }
          }
         }
-        FrameWidgetClass "{GRP-VD-GRID-AREA}" {
+        FrameWidgetClass "{ARGH-VD-GRID-AREA}" {
          Name "VehicleGridArea"
-         Slot LayoutSlot "{GRP-VD-GRID-AREA-SLOT}" {
+         Slot LayoutSlot "{ARGH-VD-GRID-AREA-SLOT}" {
           SizeMode Fill
           FillWeight 1
          }
          {
-          ImageWidgetClass "{GRP-VD-GRID-BG}" {
+          ImageWidgetClass "{ARGH-VD-GRID-BG}" {
            Name "GridBg"
-           Slot FrameWidgetSlot "{GRP-VD-GRID-BG-SLOT}" {
+           Slot FrameWidgetSlot "{ARGH-VD-GRID-BG-SLOT}" {
             Anchor 0 0 1 1
            }
            Color 0.015 0.018 0.022 1
           }
-          VerticalLayoutWidgetClass "{GRP-VD-GRID}" {
+          VerticalLayoutWidgetClass "{ARGH-VD-GRID}" {
            Name "VehicleGrid"
-           Slot FrameWidgetSlot "{GRP-VD-GRID-SLOT}" {
+           Slot FrameWidgetSlot "{ARGH-VD-GRID-SLOT}" {
             Anchor 0 0 1 1
             OffsetLeft 12
             OffsetTop 12
@@ -182,77 +182,77 @@ FrameWidgetClass {
           }
          }
         }
-        SizeLayoutWidgetClass "{GRP-VD-DETAILS-SIZE}" {
+        SizeLayoutWidgetClass "{ARGH-VD-DETAILS-SIZE}" {
          Name "DetailsSize"
-         Slot LayoutSlot "{GRP-VD-DETAILS-SIZE-SLOT}" {
+         Slot LayoutSlot "{ARGH-VD-DETAILS-SIZE-SLOT}" {
          }
          AllowWidthOverride 1
          WidthOverride 280
          {
-          OverlayWidgetClass "{GRP-VD-DETAILS}" {
+          OverlayWidgetClass "{ARGH-VD-DETAILS}" {
            Name "DetailsPanel"
-           Slot AlignableSlot "{GRP-VD-DETAILS-SLOT}" {
+           Slot AlignableSlot "{ARGH-VD-DETAILS-SLOT}" {
             HorizontalAlign 3
             VerticalAlign 3
            }
            {
-            ImageWidgetClass "{GRP-VD-DETAILS-BG}" {
+            ImageWidgetClass "{ARGH-VD-DETAILS-BG}" {
              Name "DetailsBg"
-             Slot OverlayWidgetSlot "{GRP-VD-DETAILS-BG-SLOT}" {
+             Slot OverlayWidgetSlot "{ARGH-VD-DETAILS-BG-SLOT}" {
               HorizontalAlign 3
               VerticalAlign 3
              }
              Color 0.025 0.03 0.035 1
             }
-            VerticalLayoutWidgetClass "{GRP-VD-DETAILS-CONTENT}" {
+            VerticalLayoutWidgetClass "{ARGH-VD-DETAILS-CONTENT}" {
              Name "DetailsContent"
-             Slot OverlayWidgetSlot "{GRP-VD-DETAILS-CONTENT-SLOT}" {
+             Slot OverlayWidgetSlot "{ARGH-VD-DETAILS-CONTENT-SLOT}" {
               HorizontalAlign 3
               VerticalAlign 0
               Padding 12 12 12 12
              }
              {
-              TextWidgetClass "{GRP-VD-VNAME}" {
+              TextWidgetClass "{ARGH-VD-VNAME}" {
                Name "VehicleName"
-               Slot LayoutSlot "{GRP-VD-VNAME-SLOT}" {
+               Slot LayoutSlot "{ARGH-VD-VNAME-SLOT}" {
                 Padding 0 0 0 8
                }
                Color 0.85 0.85 0.85 1
                Text "Select a vehicle"
                "Font Size" 16
               }
-              TextWidgetClass "{GRP-VD-VPRICE}" {
+              TextWidgetClass "{ARGH-VD-VPRICE}" {
                Name "VehiclePrice"
-               Slot LayoutSlot "{GRP-VD-VPRICE-SLOT}" {
+               Slot LayoutSlot "{ARGH-VD-VPRICE-SLOT}" {
                 Padding 0 0 0 16
                }
                Color 0.4 0.7 0.4 1
                Text "$0"
                "Font Size" 18
               }
-              ButtonWidgetClass "{GRP-VD-BUY-BTN}" {
+              ButtonWidgetClass "{ARGH-VD-BUY-BTN}" {
                Name "BuyButton"
-               Slot LayoutSlot "{GRP-VD-BUY-BTN-SLOT}" {
+               Slot LayoutSlot "{ARGH-VD-BUY-BTN-SLOT}" {
                }
                {
-                OverlayWidgetClass "{GRP-VD-BUY-OL}" {
+                OverlayWidgetClass "{ARGH-VD-BUY-OL}" {
                  Name "BuyOverlay"
-                 Slot ButtonWidgetSlot "{GRP-VD-BUY-OL-SLOT}" {
+                 Slot ButtonWidgetSlot "{ARGH-VD-BUY-OL-SLOT}" {
                   HorizontalAlign 3
                   VerticalAlign 3
                  }
                  {
-                  ImageWidgetClass "{GRP-VD-BUY-BG}" {
+                  ImageWidgetClass "{ARGH-VD-BUY-BG}" {
                    Name "BuyBg"
-                   Slot OverlayWidgetSlot "{GRP-VD-BUY-BG-SLOT}" {
+                   Slot OverlayWidgetSlot "{ARGH-VD-BUY-BG-SLOT}" {
                     HorizontalAlign 3
                     VerticalAlign 3
                    }
                    Color 0.04 0.06 0.04 1
                   }
-                  TextWidgetClass "{GRP-VD-BUY-TXT}" {
+                  TextWidgetClass "{ARGH-VD-BUY-TXT}" {
                    Name "BuyText"
-                   Slot OverlayWidgetSlot "{GRP-VD-BUY-TXT-SLOT}" {
+                   Slot OverlayWidgetSlot "{ARGH-VD-BUY-TXT-SLOT}" {
                     HorizontalAlign 3
                     VerticalAlign 3
                     Padding 16 10 16 10
@@ -265,45 +265,45 @@ FrameWidgetClass {
                 }
                }
               }
-              TextWidgetClass "{GRP-VD-WALLET-LBL}" {
+              TextWidgetClass "{ARGH-VD-WALLET-LBL}" {
                Name "WalletLabel"
-               Slot LayoutSlot "{GRP-VD-WALLET-LBL-SLOT}" {
+               Slot LayoutSlot "{ARGH-VD-WALLET-LBL-SLOT}" {
                 Padding 0 16 0 2
                }
                Color 0.6 0.6 0.6 1
                Text "Wallet"
                "Font Size" 12
               }
-              TextWidgetClass "{GRP-VD-WALLET-VALUE}" {
+              TextWidgetClass "{ARGH-VD-WALLET-VALUE}" {
                Name "WalletValue"
-               Slot LayoutSlot "{GRP-VD-WALLET-VALUE-SLOT}" {
+               Slot LayoutSlot "{ARGH-VD-WALLET-VALUE-SLOT}" {
                 Padding 0 0 0 10
                }
                Color 0.75 0.75 0.75 1
                Text "$0"
                "Font Size" 14
               }
-              TextWidgetClass "{GRP-VD-BANK-LBL}" {
+              TextWidgetClass "{ARGH-VD-BANK-LBL}" {
                Name "BankLabel"
-               Slot LayoutSlot "{GRP-VD-BANK-LBL-SLOT}" {
+               Slot LayoutSlot "{ARGH-VD-BANK-LBL-SLOT}" {
                 Padding 0 6 0 2
                }
                Color 0.6 0.6 0.6 1
                Text "Bank"
                "Font Size" 12
               }
-              TextWidgetClass "{GRP-VD-BANK-VALUE}" {
+              TextWidgetClass "{ARGH-VD-BANK-VALUE}" {
                Name "BankValue"
-               Slot LayoutSlot "{GRP-VD-BANK-VALUE-SLOT}" {
+               Slot LayoutSlot "{ARGH-VD-BANK-VALUE-SLOT}" {
                 Padding 0 0 0 10
                }
                Color 0.75 0.75 0.75 1
                Text "$0"
                "Font Size" 14
               }
-              TextWidgetClass "{GRP-VD-STATUS}" {
+              TextWidgetClass "{ARGH-VD-STATUS}" {
                Name "StatusText"
-               Slot LayoutSlot "{GRP-VD-STATUS-SLOT}" {
+               Slot LayoutSlot "{ARGH-VD-STATUS-SLOT}" {
                 Padding 0 8 0 0
                }
                Color 0.7 0.55 0.3 1

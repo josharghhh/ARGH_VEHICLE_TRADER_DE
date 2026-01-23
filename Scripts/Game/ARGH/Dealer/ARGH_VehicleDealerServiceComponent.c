@@ -1,18 +1,18 @@
-// GRP_VehicleDealerServiceComponent.c
+// ARGH_VehicleDealerServiceComponent.c
 // Server-authoritative GameMode component for vehicle market transactions.
 // Handles purchase validation, payment processing, and garage storage.
 
-class GRP_VehicleDealerServiceComponentClass : SCR_BaseGameModeComponentClass
+class ARGH_VehicleDealerServiceComponentClass : SCR_BaseGameModeComponentClass
 {
 }
 
-class GRP_VehicleDealerServiceComponent : SCR_BaseGameModeComponent
+class ARGH_VehicleDealerServiceComponent : SCR_BaseGameModeComponent
 {
 	// ========================================================================
 	// SECTION: SINGLETON & CONSTANTS
 	// ========================================================================
 	
-	protected static GRP_VehicleDealerServiceComponent s_pInstance;
+	protected static ARGH_VehicleDealerServiceComponent s_pInstance;
 	
 	// Rate limiting
 	static const int PURCHASE_OP_MAX = 3;
@@ -22,7 +22,7 @@ class GRP_VehicleDealerServiceComponent : SCR_BaseGameModeComponent
 	// SECTION: MEMBER VARIABLES
 	// ========================================================================
 	
-	protected ref GRP_RateLimiter m_pRateLimiter;
+	protected ref ARGH_RateLimiter m_pRateLimiter;
 	protected RplComponent m_RplComponent;
 	
 	// ========================================================================
@@ -30,7 +30,7 @@ class GRP_VehicleDealerServiceComponent : SCR_BaseGameModeComponent
 	// ========================================================================
 	
 	//------------------------------------------------------------------------------------------------
-	static GRP_VehicleDealerServiceComponent GetInstance()
+	static ARGH_VehicleDealerServiceComponent GetInstance()
 	{
 		return s_pInstance;
 	}
@@ -47,7 +47,7 @@ class GRP_VehicleDealerServiceComponent : SCR_BaseGameModeComponent
 		if (!Replication.IsServer())
 			return;
 		
-		m_pRateLimiter = new GRP_RateLimiter();
+		m_pRateLimiter = new ARGH_RateLimiter();
 		
 		Print("[VehicleDealerService] Initialized");
 	}
@@ -89,7 +89,7 @@ class GRP_VehicleDealerServiceComponent : SCR_BaseGameModeComponent
 		}
 		
 		// Find dealer component
-		GRP_VehicleDealerComponent dealerComp = FindDealerById(dealerId);
+		ARGH_VehicleDealerComponent dealerComp = FindDealerById(dealerId);
 		if (!dealerComp)
 		{
 			errorReason = "dealer_not_found";
@@ -97,7 +97,7 @@ class GRP_VehicleDealerServiceComponent : SCR_BaseGameModeComponent
 		}
 		
 		// Get dealer config
-		GRP_VehicleDealerConfig config = dealerComp.GetDealerConfig();
+		ARGH_VehicleDealerConfig config = dealerComp.GetDealerConfig();
 		if (!config)
 		{
 			errorReason = "no_dealer_config";
@@ -105,7 +105,7 @@ class GRP_VehicleDealerServiceComponent : SCR_BaseGameModeComponent
 		}
 		
 		// Validate vehicle exists in catalog
-		GRP_VehicleForSale vehicle = config.FindVehicleByPrefab(vehiclePrefab);
+		ARGH_VehicleForSale vehicle = config.FindVehicleByPrefab(vehiclePrefab);
 		if (!vehicle || !vehicle.IsEnabled())
 		{
 			errorReason = "vehicle_not_available";
@@ -172,26 +172,26 @@ class GRP_VehicleDealerServiceComponent : SCR_BaseGameModeComponent
 	//! Get vehicle catalog for a specific dealer
 	//! \param dealerId The dealer's unique ID
 	//! \return Array of vehicle DTOs available at this dealer
-	array<ref GRP_VehicleForSaleDto> GetVehicleCatalog(string dealerId)
+	array<ref ARGH_VehicleForSaleDto> GetVehicleCatalog(string dealerId)
 	{
-		array<ref GRP_VehicleForSaleDto> result = new array<ref GRP_VehicleForSaleDto>();
+		array<ref ARGH_VehicleForSaleDto> result = new array<ref ARGH_VehicleForSaleDto>();
 		
-		GRP_VehicleDealerComponent dealerComp = FindDealerById(dealerId);
+		ARGH_VehicleDealerComponent dealerComp = FindDealerById(dealerId);
 		if (!dealerComp)
 			return result;
 		
-		GRP_VehicleDealerConfig config = dealerComp.GetDealerConfig();
+		ARGH_VehicleDealerConfig config = dealerComp.GetDealerConfig();
 		if (!config)
 			return result;
 		
-		array<ref GRP_VehicleForSale> vehicles = config.GetEnabledVehicles();
-		foreach (GRP_VehicleForSale v : vehicles)
+		array<ref ARGH_VehicleForSale> vehicles = config.GetEnabledVehicles();
+		foreach (ARGH_VehicleForSale v : vehicles)
 		{
 			if (!v)
 				continue;
 			
 			int price = config.GetVehiclePrice(v.m_sPrefab);
-			GRP_VehicleForSaleDto dto = GRP_VehicleForSaleDto.Create(
+			ARGH_VehicleForSaleDto dto = ARGH_VehicleForSaleDto.Create(
 				v.m_sPrefab,
 				v.GetDisplayName(),
 				price,
@@ -212,10 +212,10 @@ class GRP_VehicleDealerServiceComponent : SCR_BaseGameModeComponent
 		// If dealer specified, use that dealer's config
 		if (!dealerId.IsEmpty())
 		{
-			GRP_VehicleDealerComponent dealer = FindDealerById(dealerId);
+			ARGH_VehicleDealerComponent dealer = FindDealerById(dealerId);
 			if (dealer)
 			{
-				GRP_VehicleDealerConfig cfg = dealer.GetDealerConfig();
+				ARGH_VehicleDealerConfig cfg = dealer.GetDealerConfig();
 				if (cfg)
 					return cfg.GetVehiclePrice(prefab);
 			}
@@ -231,7 +231,7 @@ class GRP_VehicleDealerServiceComponent : SCR_BaseGameModeComponent
 	// ========================================================================
 	
 	//------------------------------------------------------------------------------------------------
-	protected GRP_VehicleDealerComponent FindDealerById(string dealerId)
+	protected ARGH_VehicleDealerComponent FindDealerById(string dealerId)
 	{
 		// Search for dealer components with matching ID
 		// This could be optimized with a registry pattern
@@ -243,7 +243,7 @@ class GRP_VehicleDealerServiceComponent : SCR_BaseGameModeComponent
 			if (!entity)
 				continue;
 			
-			GRP_VehicleDealerComponent dealer = GRP_VehicleDealerComponent.Cast(entity.FindComponent(GRP_VehicleDealerComponent));
+			ARGH_VehicleDealerComponent dealer = ARGH_VehicleDealerComponent.Cast(entity.FindComponent(ARGH_VehicleDealerComponent));
 			if (dealer && dealer.GetDealerId() == dealerId)
 				return dealer;
 		}
@@ -270,7 +270,7 @@ class GRP_VehicleDealerServiceComponent : SCR_BaseGameModeComponent
 	}
 
 	//------------------------------------------------------------------------------------------------
-	protected bool SpawnPurchasedVehicle(GRP_VehicleDealerComponent dealerComp, int playerId, ResourceName vehiclePrefab, out IEntity vehicle)
+	protected bool SpawnPurchasedVehicle(ARGH_VehicleDealerComponent dealerComp, int playerId, ResourceName vehiclePrefab, out IEntity vehicle)
 	{
 		vehicle = null;
 

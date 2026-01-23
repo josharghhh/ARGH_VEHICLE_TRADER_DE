@@ -1,13 +1,13 @@
-// GRP_VehicleDealerComponent.c
+// ARGH_VehicleDealerComponent.c
 // Shared component placed on NPC or terminal entities to provide vehicle dealership functionality.
 // Handles RPC communication between client UI and server service.
 
 [EntityEditorProps(category: "GanglandRP/Markets", description: "Vehicle dealer component for NPCs or terminals")]
-class GRP_VehicleDealerComponentClass : ScriptComponentClass
+class ARGH_VehicleDealerComponentClass : ScriptComponentClass
 {
 }
 
-class GRP_VehicleDealerComponent : ScriptComponent
+class ARGH_VehicleDealerComponent : ScriptComponent
 {
 	// ========================================================================
 	// SECTION: ATTRIBUTES
@@ -44,11 +44,11 @@ class GRP_VehicleDealerComponent : ScriptComponent
 	// SECTION: MEMBER VARIABLES
 	// ========================================================================
 	
-	protected ref GRP_VehicleDealerConfig m_pConfig;
+	protected ref ARGH_VehicleDealerConfig m_pConfig;
 	protected RplComponent m_pRplComponent;
 	
 	// Client-side cache of vehicle catalog
-	protected ref array<ref GRP_VehicleForSaleDto> m_aCachedCatalog;
+	protected ref array<ref ARGH_VehicleForSaleDto> m_aCachedCatalog;
 	
 	// Callback for UI when catalog received
 	protected ref ScriptInvoker m_OnCatalogReceived;
@@ -66,7 +66,7 @@ class GRP_VehicleDealerComponent : ScriptComponent
 		m_pRplComponent = RplComponent.Cast(owner.FindComponent(RplComponent));
 		m_OnCatalogReceived = new ScriptInvoker();
 		m_OnPurchaseResult = new ScriptInvoker();
-		m_aCachedCatalog = new array<ref GRP_VehicleForSaleDto>();
+		m_aCachedCatalog = new array<ref ARGH_VehicleForSaleDto>();
 		
 		// Load config on both client and server so UI can build catalog locally.
 		LoadConfig();
@@ -95,7 +95,7 @@ class GRP_VehicleDealerComponent : ScriptComponent
 			return;
 		}
 		
-		m_pConfig = GRP_VehicleDealerConfig.Cast(BaseContainerTools.CreateInstanceFromContainer(container));
+		m_pConfig = ARGH_VehicleDealerConfig.Cast(BaseContainerTools.CreateInstanceFromContainer(container));
 		
 		if (m_pConfig)
 		{
@@ -126,7 +126,7 @@ class GRP_VehicleDealerComponent : ScriptComponent
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	GRP_VehicleDealerConfig GetDealerConfig()
+	ARGH_VehicleDealerConfig GetDealerConfig()
 	{
 		return m_pConfig;
 	}
@@ -196,7 +196,7 @@ class GRP_VehicleDealerComponent : ScriptComponent
 	}
 	
 	//------------------------------------------------------------------------------------------------
-	array<ref GRP_VehicleForSaleDto> GetCachedCatalog()
+	array<ref ARGH_VehicleForSaleDto> GetCachedCatalog()
 	{
 		return m_aCachedCatalog;
 	}
@@ -211,7 +211,7 @@ class GRP_VehicleDealerComponent : ScriptComponent
 	{
 		if (Replication.IsServer() || !m_pRplComponent)
 		{
-			array<ref GRP_VehicleForSaleDto> localCatalog = BuildCatalogFromConfig();
+			array<ref ARGH_VehicleForSaleDto> localCatalog = BuildCatalogFromConfig();
 			if (localCatalog && m_OnCatalogReceived)
 				m_OnCatalogReceived.Invoke(localCatalog);
 			return;
@@ -263,8 +263,8 @@ class GRP_VehicleDealerComponent : ScriptComponent
 		Print(string.Format("VehicleDealer %1: Catalog requested by player %2", m_sDealerId, playerId));
 		
 		// Get catalog from service
-		GRP_VehicleDealerServiceComponent service = GRP_VehicleDealerServiceComponent.GetInstance();
-		array<ref GRP_VehicleForSaleDto> catalog = null;
+		ARGH_VehicleDealerServiceComponent service = ARGH_VehicleDealerServiceComponent.GetInstance();
+		array<ref ARGH_VehicleForSaleDto> catalog = null;
 		if (service)
 		{
 			catalog = service.GetVehicleCatalog(m_sDealerId);
@@ -286,7 +286,7 @@ class GRP_VehicleDealerComponent : ScriptComponent
 		array<int> seats = {};
 		array<bool> licenses = {};
 		
-		foreach (GRP_VehicleForSaleDto dto : catalog)
+		foreach (ARGH_VehicleForSaleDto dto : catalog)
 		{
 			prefabs.Insert(dto.m_sPrefab);
 			names.Insert(dto.m_sDisplayName);
@@ -317,7 +317,7 @@ class GRP_VehicleDealerComponent : ScriptComponent
 		Print(string.Format("VehicleDealer %1: Purchase request from player %2 for %3", m_sDealerId, playerId, prefabStr));
 		
 		// Process purchase via service
-		GRP_VehicleDealerServiceComponent service = GRP_VehicleDealerServiceComponent.GetInstance();
+		ARGH_VehicleDealerServiceComponent service = ARGH_VehicleDealerServiceComponent.GetInstance();
 		string errorReason;
 		ResourceName prefab = prefabStr;
 		bool success = false;
@@ -358,7 +358,7 @@ class GRP_VehicleDealerComponent : ScriptComponent
 		
 		for (int i = 0; i < prefabs.Count(); i++)
 		{
-			GRP_VehicleForSaleDto dto = new GRP_VehicleForSaleDto();
+			ARGH_VehicleForSaleDto dto = new ARGH_VehicleForSaleDto();
 			dto.m_sPrefab = prefabs[i];
 			dto.m_sDisplayName = names[i];
 			dto.m_iPrice = prices[i];
@@ -425,7 +425,7 @@ class GRP_VehicleDealerComponent : ScriptComponent
 	}
 
 	//------------------------------------------------------------------------------------------------
-	protected array<ref GRP_VehicleForSaleDto> BuildCatalogFromConfig()
+	protected array<ref ARGH_VehicleForSaleDto> BuildCatalogFromConfig()
 	{
 		if (!m_pConfig)
 		{
@@ -433,15 +433,15 @@ class GRP_VehicleDealerComponent : ScriptComponent
 			return null;
 		}
 
-		array<ref GRP_VehicleForSaleDto> result = new array<ref GRP_VehicleForSaleDto>();
-		array<ref GRP_VehicleForSale> vehicles = m_pConfig.GetEnabledVehicles();
-		foreach (GRP_VehicleForSale v : vehicles)
+		array<ref ARGH_VehicleForSaleDto> result = new array<ref ARGH_VehicleForSaleDto>();
+		array<ref ARGH_VehicleForSale> vehicles = m_pConfig.GetEnabledVehicles();
+		foreach (ARGH_VehicleForSale v : vehicles)
 		{
 			if (!v)
 				continue;
 
 			int price = m_pConfig.GetVehiclePrice(v.m_sPrefab);
-			GRP_VehicleForSaleDto dto = GRP_VehicleForSaleDto.Create(
+			ARGH_VehicleForSaleDto dto = ARGH_VehicleForSaleDto.Create(
 				v.m_sPrefab,
 				v.GetDisplayName(),
 				price,
@@ -473,7 +473,7 @@ class GRP_VehicleDealerComponent : ScriptComponent
 			return false;
 		}
 
-		GRP_VehicleForSale vehicle = m_pConfig.FindVehicleByPrefab(vehiclePrefab);
+		ARGH_VehicleForSale vehicle = m_pConfig.FindVehicleByPrefab(vehiclePrefab);
 		if (!vehicle || !vehicle.IsEnabled())
 		{
 			errorReason = "vehicle_not_available";

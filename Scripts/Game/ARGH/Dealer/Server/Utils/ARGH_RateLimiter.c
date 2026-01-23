@@ -1,25 +1,25 @@
 // Simple fixed-window rate limiter for server-side anti-spam.
 // Use per-player/per-action keys: e.g. string.Format("%1:vehicle_purchase", playerId).
 
-class GRP_RateLimitBucket : Managed
+class ARGH_RateLimitBucket : Managed
 {
 	int m_iWindowStart;
 	int m_iCount;
 
-	void GRP_RateLimitBucket()
+	void ARGH_RateLimitBucket()
 	{
 		m_iWindowStart = 0;
 		m_iCount = 0;
 	}
 }
 
-class GRP_RateLimiter : Managed
+class ARGH_RateLimiter : Managed
 {
-	protected ref map<string, ref GRP_RateLimitBucket> m_mBuckets;
+	protected ref map<string, ref ARGH_RateLimitBucket> m_mBuckets;
 
-	void GRP_RateLimiter()
+	void ARGH_RateLimiter()
 	{
-		m_mBuckets = new map<string, ref GRP_RateLimitBucket>();
+		m_mBuckets = new map<string, ref ARGH_RateLimitBucket>();
 	}
 
 	// Returns true if allowed and consumes a slot.
@@ -35,10 +35,10 @@ class GRP_RateLimiter : Managed
 
 		int now = System.GetUnixTime();
 
-		GRP_RateLimitBucket bucket;
+		ARGH_RateLimitBucket bucket;
 		if (!m_mBuckets.Find(key, bucket) || !bucket)
 		{
-			bucket = new GRP_RateLimitBucket();
+			bucket = new ARGH_RateLimitBucket();
 			bucket.m_iWindowStart = now;
 			bucket.m_iCount = 0;
 			m_mBuckets.Set(key, bucket);

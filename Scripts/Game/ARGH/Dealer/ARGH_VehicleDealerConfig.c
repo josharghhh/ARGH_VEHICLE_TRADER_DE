@@ -1,8 +1,8 @@
-// GRP_VehicleDealerConfig.c
+// ARGH_VehicleDealerConfig.c
 // Dealer configuration supporting ambient catalog imports with price overrides.
 
 [BaseContainerProps(), SCR_BaseContainerCustomTitleField("m_sDisplayName")]
-class GRP_VehicleForSale : Managed
+class ARGH_VehicleForSale : Managed
 {
 	[Attribute(defvalue: "", uiwidget: UIWidgets.ResourcePickerThumbnail, params: "et", desc: "Vehicle prefab", category: "Vehicle")]
 	ResourceName m_sPrefab;
@@ -34,12 +34,12 @@ class GRP_VehicleForSale : Managed
 	{
 		if (!m_sDisplayName.IsEmpty())
 			return m_sDisplayName;
-		return GRP_VehicleDealerConfig.ExtractDisplayNameFromPrefab(m_sPrefab);
+		return ARGH_VehicleDealerConfig.ExtractDisplayNameFromPrefab(m_sPrefab);
 	}
 }
 
 [BaseContainerProps(), SCR_BaseContainerCustomTitleField("m_sPrefab")]
-class GRP_VehiclePriceOverride : Managed
+class ARGH_VehiclePriceOverride : Managed
 {
 	[Attribute(defvalue: "", uiwidget: UIWidgets.ResourcePickerThumbnail, params: "et", desc: "Vehicle prefab to override", category: "Override")]
 	ResourceName m_sPrefab;
@@ -64,7 +64,7 @@ class GRP_VehiclePriceOverride : Managed
 }
 
 [BaseContainerProps(configRoot: true)]
-class GRP_VehicleDealerConfig : Managed
+class ARGH_VehicleDealerConfig : Managed
 {
 	[Attribute(defvalue: "", uiwidget: UIWidgets.EditBox, desc: "Dealer ID", category: "Identity")]
 	string m_sDealerId;
@@ -82,12 +82,12 @@ class GRP_VehicleDealerConfig : Managed
 	int m_iDefaultPrice;
 
 	[Attribute(defvalue: "{}", desc: "Explicit vehicle entries (override or append)", category: "Catalog")]
-	ref array<ref GRP_VehicleForSale> m_aVehicles;
+	ref array<ref ARGH_VehicleForSale> m_aVehicles;
 
 	[Attribute(defvalue: "{}", desc: "Price/category overrides by prefab", category: "Catalog")]
-	ref array<ref GRP_VehiclePriceOverride> m_aPriceOverrides;
+	ref array<ref ARGH_VehiclePriceOverride> m_aPriceOverrides;
 
-	protected ref array<ref GRP_VehicleForSale> m_aResolvedVehicles;
+	protected ref array<ref ARGH_VehicleForSale> m_aResolvedVehicles;
 	protected bool m_bResolved;
 
 	//------------------------------------------------------------------------------------------------
@@ -110,22 +110,22 @@ class GRP_VehicleDealerConfig : Managed
 	//------------------------------------------------------------------------------------------------
 	int GetEnabledVehicleCount()
 	{
-		array<ref GRP_VehicleForSale> vehicles = GetEnabledVehicles();
+		array<ref ARGH_VehicleForSale> vehicles = GetEnabledVehicles();
 		if (!vehicles)
 			return 0;
 		return vehicles.Count();
 	}
 
 	//------------------------------------------------------------------------------------------------
-	array<ref GRP_VehicleForSale> GetEnabledVehicles()
+	array<ref ARGH_VehicleForSale> GetEnabledVehicles()
 	{
 		EnsureResolved();
 
-		array<ref GRP_VehicleForSale> enabled = new array<ref GRP_VehicleForSale>();
+		array<ref ARGH_VehicleForSale> enabled = new array<ref ARGH_VehicleForSale>();
 		if (!m_aResolvedVehicles)
 			return enabled;
 
-		foreach (GRP_VehicleForSale v : m_aResolvedVehicles)
+		foreach (ARGH_VehicleForSale v : m_aResolvedVehicles)
 		{
 			if (v && v.IsEnabled())
 				enabled.Insert(v);
@@ -135,13 +135,13 @@ class GRP_VehicleDealerConfig : Managed
 	}
 
 	//------------------------------------------------------------------------------------------------
-	GRP_VehicleForSale FindVehicleByPrefab(ResourceName prefab)
+	ARGH_VehicleForSale FindVehicleByPrefab(ResourceName prefab)
 	{
 		EnsureResolved();
 		if (!m_aResolvedVehicles)
 			return null;
 
-		foreach (GRP_VehicleForSale v : m_aResolvedVehicles)
+		foreach (ARGH_VehicleForSale v : m_aResolvedVehicles)
 		{
 			if (v && v.m_sPrefab == prefab)
 				return v;
@@ -153,7 +153,7 @@ class GRP_VehicleDealerConfig : Managed
 	//------------------------------------------------------------------------------------------------
 	int GetVehiclePrice(ResourceName prefab)
 	{
-		GRP_VehicleForSale vehicle = FindVehicleByPrefab(prefab);
+		ARGH_VehicleForSale vehicle = FindVehicleByPrefab(prefab);
 		if (!vehicle)
 			return -1;
 		return vehicle.m_iPrice;
@@ -165,17 +165,17 @@ class GRP_VehicleDealerConfig : Managed
 		if (m_bResolved)
 			return;
 
-		m_aResolvedVehicles = new array<ref GRP_VehicleForSale>();
+		m_aResolvedVehicles = new array<ref ARGH_VehicleForSale>();
 		m_bResolved = true;
 
-		map<string, ref GRP_VehicleForSale> byPrefab = new map<string, ref GRP_VehicleForSale>();
+		map<string, ref ARGH_VehicleForSale> byPrefab = new map<string, ref ARGH_VehicleForSale>();
 
 		if (m_bUseAmbientCatalog && !m_rAmbientCatalog.IsEmpty())
 			LoadAmbientCatalog(byPrefab);
 
 		if (m_aVehicles)
 		{
-			foreach (GRP_VehicleForSale v : m_aVehicles)
+			foreach (ARGH_VehicleForSale v : m_aVehicles)
 			{
 				if (!v || v.m_sPrefab.IsEmpty())
 					continue;
@@ -184,7 +184,7 @@ class GRP_VehicleDealerConfig : Managed
 			}
 		}
 
-		foreach (string key, GRP_VehicleForSale value : byPrefab)
+		foreach (string key, ARGH_VehicleForSale value : byPrefab)
 		{
 			if (value)
 				m_aResolvedVehicles.Insert(value);
@@ -192,7 +192,7 @@ class GRP_VehicleDealerConfig : Managed
 	}
 
 	//------------------------------------------------------------------------------------------------
-	protected void LoadAmbientCatalog(map<string, ref GRP_VehicleForSale> outByPrefab)
+	protected void LoadAmbientCatalog(map<string, ref ARGH_VehicleForSale> outByPrefab)
 	{
 		Resource res = Resource.Load(m_rAmbientCatalog);
 		if (!res || !res.IsValid())
@@ -213,14 +213,14 @@ class GRP_VehicleDealerConfig : Managed
 		else if (hasRules && rules.Count() > 0)
 			flatRules = rules;
 
-		map<string, ref GRP_VehiclePriceOverride> overrides = BuildOverrideMap();
+		map<string, ref ARGH_VehiclePriceOverride> overrides = BuildOverrideMap();
 
 		foreach (ARGH_AmbientVehicleSpawnRule rule : flatRules)
 		{
 			if (!rule || !rule.m_bEnabled || rule.m_fSpawnWeight <= 0.0)
 				continue;
 
-			GRP_VehicleForSale v = new GRP_VehicleForSale();
+			ARGH_VehicleForSale v = new ARGH_VehicleForSale();
 			v.m_sPrefab = rule.m_rPrefab;
 			v.m_sDisplayName = rule.m_sDisplayName;
 			v.m_sCategory = "Civilian";
@@ -235,13 +235,13 @@ class GRP_VehicleDealerConfig : Managed
 	}
 
 	//------------------------------------------------------------------------------------------------
-	protected map<string, ref GRP_VehiclePriceOverride> BuildOverrideMap()
+	protected map<string, ref ARGH_VehiclePriceOverride> BuildOverrideMap()
 	{
-		map<string, ref GRP_VehiclePriceOverride> result = new map<string, ref GRP_VehiclePriceOverride>();
+		map<string, ref ARGH_VehiclePriceOverride> result = new map<string, ref ARGH_VehiclePriceOverride>();
 		if (!m_aPriceOverrides)
 			return result;
 
-		foreach (GRP_VehiclePriceOverride o : m_aPriceOverrides)
+		foreach (ARGH_VehiclePriceOverride o : m_aPriceOverrides)
 		{
 			if (!o || o.m_sPrefab.IsEmpty())
 				continue;
@@ -252,12 +252,12 @@ class GRP_VehicleDealerConfig : Managed
 	}
 
 	//------------------------------------------------------------------------------------------------
-	protected void ApplyOverride(GRP_VehicleForSale v, map<string, ref GRP_VehiclePriceOverride> overrides)
+	protected void ApplyOverride(ARGH_VehicleForSale v, map<string, ref ARGH_VehiclePriceOverride> overrides)
 	{
 		if (!v || !overrides)
 			return;
 
-		GRP_VehiclePriceOverride o;
+		ARGH_VehiclePriceOverride o;
 		if (!overrides.Find(v.m_sPrefab, o) || !o)
 			return;
 

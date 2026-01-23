@@ -1,12 +1,12 @@
-// GRP_VehicleDealerMenuUI.c
+// ARGH_VehicleDealerMenuUI.c
 // Vehicle dealer menu implementation.
 
-class GRP_VehicleDealerButtonHandler : ScriptedWidgetEventHandler
+class ARGH_VehicleDealerButtonHandler : ScriptedWidgetEventHandler
 {
-	protected GRP_VehicleDealerMenuUI m_Menu;
+	protected ARGH_VehicleDealerMenuUI m_Menu;
 	protected string m_Action;
 
-	void Init(GRP_VehicleDealerMenuUI menu, string action)
+	void Init(ARGH_VehicleDealerMenuUI menu, string action)
 	{
 		m_Menu = menu;
 		m_Action = action;
@@ -22,12 +22,12 @@ class GRP_VehicleDealerButtonHandler : ScriptedWidgetEventHandler
 	}
 }
 
-class GRP_VehicleDealerCategoryHandler : ScriptedWidgetEventHandler
+class ARGH_VehicleDealerCategoryHandler : ScriptedWidgetEventHandler
 {
-	protected GRP_VehicleDealerMenuUI m_Menu;
+	protected ARGH_VehicleDealerMenuUI m_Menu;
 	protected string m_Category;
 
-	void Init(GRP_VehicleDealerMenuUI menu, string category)
+	void Init(ARGH_VehicleDealerMenuUI menu, string category)
 	{
 		m_Menu = menu;
 		m_Category = category;
@@ -43,12 +43,12 @@ class GRP_VehicleDealerCategoryHandler : ScriptedWidgetEventHandler
 	}
 }
 
-class GRP_VehicleDealerItemHandler : ScriptedWidgetEventHandler
+class ARGH_VehicleDealerItemHandler : ScriptedWidgetEventHandler
 {
-	protected GRP_VehicleDealerMenuUI m_Menu;
+	protected ARGH_VehicleDealerMenuUI m_Menu;
 	protected int m_Index;
 
-	void Init(GRP_VehicleDealerMenuUI menu, int index)
+	void Init(ARGH_VehicleDealerMenuUI menu, int index)
 	{
 		m_Menu = menu;
 		m_Index = index;
@@ -64,10 +64,10 @@ class GRP_VehicleDealerItemHandler : ScriptedWidgetEventHandler
 	}
 }
 
-class GRP_VehicleDealerMenuUI : MenuBase
+class ARGH_VehicleDealerMenuUI : MenuBase
 {
-protected static const ResourceName ITEM_LAYOUT = "{7C149073651E4125}UI/GRP_vehicle_dealer_item.layout";
-protected static const ResourceName CATEGORY_LAYOUT = "{646A162BFADA4F76}UI/GRP_vehicle_category_button.layout";
+protected static const ResourceName ITEM_LAYOUT = "{7C149073651E4125}UI/ARGH_vehicle_dealer_item.layout";
+protected static const ResourceName CATEGORY_LAYOUT = "{646A162BFADA4F76}UI/ARGH_vehicle_category_button.layout";
 
 	protected Widget m_Root;
 	protected TextWidget m_TitleText;
@@ -94,9 +94,9 @@ protected static const ResourceName CATEGORY_LAYOUT = "{646A162BFADA4F76}UI/GRP_
 	protected bool m_WasManualCollectionOverride;
 	protected bool m_WasManualNearbyOverride;
 
-	protected GRP_VehicleDealerComponent m_Dealer;
-	protected ref array<ref GRP_VehicleForSaleDto> m_Catalog;
-	protected ref array<ref GRP_VehicleForSaleDto> m_Filtered;
+	protected ARGH_VehicleDealerComponent m_Dealer;
+	protected ref array<ref ARGH_VehicleForSaleDto> m_Catalog;
+	protected ref array<ref ARGH_VehicleForSaleDto> m_Filtered;
 	protected ref array<Widget> m_CategoryWidgets;
 	protected ref array<Widget> m_ItemWidgets;
 	protected ref array<ImageWidget> m_ItemBackgrounds;
@@ -115,7 +115,7 @@ protected static const ResourceName CATEGORY_LAYOUT = "{646A162BFADA4F76}UI/GRP_
 	override void OnMenuOpen()
 	{
 		super.OnMenuOpen();
-		GRP_VehicleDealerMenuContext.SetMenuOpen(true);
+		ARGH_VehicleDealerMenuContext.SetMenuOpen(true);
 
 		m_Root = GetRootWidget();
 		if (!m_Root)
@@ -132,8 +132,8 @@ protected static const ResourceName CATEGORY_LAYOUT = "{646A162BFADA4F76}UI/GRP_
 		m_CategoryList = VerticalLayoutWidget.Cast(m_Root.FindAnyWidget("CategoryList"));
 		m_VehicleGrid = VerticalLayoutWidget.Cast(m_Root.FindAnyWidget("VehicleGrid"));
 
-		m_Catalog = new array<ref GRP_VehicleForSaleDto>();
-		m_Filtered = new array<ref GRP_VehicleForSaleDto>();
+		m_Catalog = new array<ref ARGH_VehicleForSaleDto>();
+		m_Filtered = new array<ref ARGH_VehicleForSaleDto>();
 		m_CategoryWidgets = new array<Widget>();
 		m_ItemWidgets = new array<Widget>();
 		m_ItemBackgrounds = new array<ImageWidget>();
@@ -143,7 +143,7 @@ protected static const ResourceName CATEGORY_LAYOUT = "{646A162BFADA4F76}UI/GRP_
 		BindButton(m_BuyButton, "buy");
 		BindCategoryButton(m_Root.FindAnyWidget("CategoryAll"), "All");
 
-		m_Dealer = GRP_VehicleDealerMenuContext.GetActiveDealer();
+		m_Dealer = ARGH_VehicleDealerMenuContext.GetActiveDealer();
 		if (m_Dealer && m_TitleText)
 			m_TitleText.SetText(m_Dealer.GetDealerName());
 
@@ -177,9 +177,9 @@ protected static const ResourceName CATEGORY_LAYOUT = "{646A162BFADA4F76}UI/GRP_
 			m_Dealer.GetOnPurchaseResult().Remove(OnPurchaseResult);
 		}
 
-		GRP_VehicleDealerMenuContext.Clear();
+		ARGH_VehicleDealerMenuContext.Clear();
 		CaptureInput(false);
-		GRP_VehicleDealerMenuContext.SetMenuOpen(false);
+		ARGH_VehicleDealerMenuContext.SetMenuOpen(false);
 		FocusMenuRoot(true);
 
 		super.OnMenuClose();
@@ -232,7 +232,7 @@ protected static const ResourceName CATEGORY_LAYOUT = "{646A162BFADA4F76}UI/GRP_
 			return;
 
 		m_SelectedIndex = index;
-		GRP_VehicleForSaleDto dto = m_Filtered[index];
+		ARGH_VehicleForSaleDto dto = m_Filtered[index];
 		m_SelectedPrefab = dto.m_sPrefab;
 
 		if (m_VehicleName)
@@ -243,7 +243,7 @@ protected static const ResourceName CATEGORY_LAYOUT = "{646A162BFADA4F76}UI/GRP_
 		UpdateItemSelectionVisuals();
 	}
 
-	protected void OnCatalogReceived(array<ref GRP_VehicleForSaleDto> catalog)
+	protected void OnCatalogReceived(array<ref ARGH_VehicleForSaleDto> catalog)
 	{
 		m_Catalog = catalog;
 		BuildCategoryButtons();
@@ -264,7 +264,7 @@ protected static const ResourceName CATEGORY_LAYOUT = "{646A162BFADA4F76}UI/GRP_
 		ClearCategoryButtons();
 
 		map<string, bool> seen = new map<string, bool>();
-		foreach (GRP_VehicleForSaleDto dto : m_Catalog)
+		foreach (ARGH_VehicleForSaleDto dto : m_Catalog)
 		{
 			if (!dto)
 				continue;
@@ -320,7 +320,7 @@ protected static const ResourceName CATEGORY_LAYOUT = "{646A162BFADA4F76}UI/GRP_
 		if (m_VehiclePrice)
 			m_VehiclePrice.SetText("$0");
 
-		foreach (GRP_VehicleForSaleDto dto : m_Catalog)
+		foreach (ARGH_VehicleForSaleDto dto : m_Catalog)
 		{
 			if (!dto)
 				continue;
@@ -340,7 +340,7 @@ protected static const ResourceName CATEGORY_LAYOUT = "{646A162BFADA4F76}UI/GRP_
 
 		for (int i = 0; i < m_Filtered.Count(); i++)
 		{
-			GRP_VehicleForSaleDto dto = m_Filtered[i];
+			ARGH_VehicleForSaleDto dto = m_Filtered[i];
 			Widget item = GetGame().GetWorkspace().CreateWidgets(ITEM_LAYOUT, m_VehicleGrid);
 			if (!item)
 				continue;
@@ -398,7 +398,7 @@ protected static const ResourceName CATEGORY_LAYOUT = "{646A162BFADA4F76}UI/GRP_
 		if (!button)
 			return;
 
-		GRP_VehicleDealerButtonHandler handler = new GRP_VehicleDealerButtonHandler();
+		ARGH_VehicleDealerButtonHandler handler = new ARGH_VehicleDealerButtonHandler();
 		handler.Init(this, action);
 		button.AddHandler(handler);
 		m_Handlers.Insert(handler);
@@ -409,7 +409,7 @@ protected static const ResourceName CATEGORY_LAYOUT = "{646A162BFADA4F76}UI/GRP_
 		if (!button)
 			return;
 
-		GRP_VehicleDealerCategoryHandler handler = new GRP_VehicleDealerCategoryHandler();
+		ARGH_VehicleDealerCategoryHandler handler = new ARGH_VehicleDealerCategoryHandler();
 		handler.Init(this, category);
 		button.AddHandler(handler);
 		m_Handlers.Insert(handler);
@@ -420,7 +420,7 @@ protected static const ResourceName CATEGORY_LAYOUT = "{646A162BFADA4F76}UI/GRP_
 		if (!button)
 			return;
 
-		GRP_VehicleDealerItemHandler handler = new GRP_VehicleDealerItemHandler();
+		ARGH_VehicleDealerItemHandler handler = new ARGH_VehicleDealerItemHandler();
 		handler.Init(this, index);
 		button.AddHandler(handler);
 		m_Handlers.Insert(handler);

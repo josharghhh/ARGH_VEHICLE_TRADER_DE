@@ -1,13 +1,13 @@
-// GRP_VehicleDealerMenuContext.c
+// ARGH_VehicleDealerMenuContext.c
 // Simple context holder for the active dealer while opening the menu.
 
-class GRP_VehicleDealerMenuContext
+class ARGH_VehicleDealerMenuContext
 {
 	protected static RplId s_rDealerId = RplId.Invalid();
 	protected static bool s_bMenuOpen;
 
 	//------------------------------------------------------------------------------------------------
-	static void SetActiveDealer(GRP_VehicleDealerComponent dealer)
+	static void SetActiveDealer(ARGH_VehicleDealerComponent dealer)
 	{
 		s_rDealerId = RplId.Invalid();
 		if (!dealer)
@@ -21,7 +21,7 @@ class GRP_VehicleDealerMenuContext
 	}
 
 	//------------------------------------------------------------------------------------------------
-	static GRP_VehicleDealerComponent GetActiveDealer()
+	static ARGH_VehicleDealerComponent GetActiveDealer()
 	{
 		if (!s_rDealerId.IsValid())
 			return null;
@@ -32,7 +32,7 @@ class GRP_VehicleDealerMenuContext
 		if (!owner)
 			return null;
 
-		return GRP_VehicleDealerComponent.Cast(owner.FindComponent(GRP_VehicleDealerComponent));
+		return ARGH_VehicleDealerComponent.Cast(owner.FindComponent(ARGH_VehicleDealerComponent));
 	}
 
 	//------------------------------------------------------------------------------------------------

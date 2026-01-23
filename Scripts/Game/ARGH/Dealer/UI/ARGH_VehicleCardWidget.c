@@ -1,9 +1,9 @@
-// GRP_VehicleCardWidget.c
+// ARGH_VehicleCardWidget.c
 // Widget component representing a single vehicle option in the vehicle spawner grid.
 // Shows thumbnail, name, and availability status.
 
 // Vehicle category enum for filtering
-enum GRP_EVehicleCategory
+enum ARGH_EVehicleCategory
 {
 	ALL = 0,
 	POLICE_PATROL = 1,
@@ -15,20 +15,20 @@ enum GRP_EVehicleCategory
 }
 
 // Vehicle data class for UI display
-class GRP_VehicleCardData
+class ARGH_VehicleCardData
 {
 	ResourceName m_sPrefab;
 	string m_sDisplayName;
-	GRP_EVehicleCategory m_eCategory;
+	ARGH_EVehicleCategory m_eCategory;
 	bool m_bAvailable;
 	int m_iIndex;
 	
-	void GRP_VehicleCardData() {}
+	void ARGH_VehicleCardData() {}
 	
 	//------------------------------------------------------------------------------------------------
-	static GRP_VehicleCardData Create(ResourceName prefab, string displayName, GRP_EVehicleCategory category, int index, bool available = true)
+	static ARGH_VehicleCardData Create(ResourceName prefab, string displayName, ARGH_EVehicleCategory category, int index, bool available = true)
 	{
-		GRP_VehicleCardData data = new GRP_VehicleCardData();
+		ARGH_VehicleCardData data = new ARGH_VehicleCardData();
 		data.m_sPrefab = prefab;
 		data.m_sDisplayName = displayName;
 		data.m_eCategory = category;
@@ -39,23 +39,23 @@ class GRP_VehicleCardData
 	
 	//------------------------------------------------------------------------------------------------
 	//! Get category display name
-	static string GetCategoryName(GRP_EVehicleCategory category)
+	static string GetCategoryName(ARGH_EVehicleCategory category)
 	{
 		switch (category)
 		{
-			case GRP_EVehicleCategory.ALL:
+			case ARGH_EVehicleCategory.ALL:
 				return "All Vehicles";
-			case GRP_EVehicleCategory.POLICE_PATROL:
+			case ARGH_EVehicleCategory.POLICE_PATROL:
 				return "Police Patrol";
-			case GRP_EVehicleCategory.POLICE_SUV:
+			case ARGH_EVehicleCategory.POLICE_SUV:
 				return "Police SUV";
-			case GRP_EVehicleCategory.SHERIFF:
+			case ARGH_EVehicleCategory.SHERIFF:
 				return "Sheriff";
-			case GRP_EVehicleCategory.UNMARKED:
+			case ARGH_EVehicleCategory.UNMARKED:
 				return "Unmarked";
-			case GRP_EVehicleCategory.FIRE:
+			case ARGH_EVehicleCategory.FIRE:
 				return "Fire Dept";
-			case GRP_EVehicleCategory.EMS:
+			case ARGH_EVehicleCategory.EMS:
 				return "EMS";
 		}
 		return "Unknown";
@@ -63,48 +63,48 @@ class GRP_VehicleCardData
 	
 	//------------------------------------------------------------------------------------------------
 	//! Determine category from prefab path (heuristic)
-	static GRP_EVehicleCategory DetermineCategoryFromPrefab(ResourceName prefab)
+	static ARGH_EVehicleCategory DetermineCategoryFromPrefab(ResourceName prefab)
 	{
 		string path = prefab;
 		path.ToLower();
 		
 		if (path.Contains("fire") || path.Contains("firetruck") || path.Contains("engine"))
 		{
-			return GRP_EVehicleCategory.FIRE;
+			return ARGH_EVehicleCategory.FIRE;
 		}
 		if (path.Contains("ems") || path.Contains("ambulance") || path.Contains("medic"))
 		{
-			return GRP_EVehicleCategory.EMS;
+			return ARGH_EVehicleCategory.EMS;
 		}
 		if (path.Contains("sheriff"))
 		{
-			return GRP_EVehicleCategory.SHERIFF;
+			return ARGH_EVehicleCategory.SHERIFF;
 		}
 		if (path.Contains("unmarked") || path.Contains("detective") || path.Contains("undercover"))
 		{
-			return GRP_EVehicleCategory.UNMARKED;
+			return ARGH_EVehicleCategory.UNMARKED;
 		}
 		if (path.Contains("suv") || path.Contains("tahoe") || path.Contains("explorer"))
 		{
-			return GRP_EVehicleCategory.POLICE_SUV;
+			return ARGH_EVehicleCategory.POLICE_SUV;
 		}
 		if (path.Contains("police") || path.Contains("patrol") || path.Contains("cruiser") || path.Contains("charger") || path.Contains("crown"))
 		{
-			return GRP_EVehicleCategory.POLICE_PATROL;
+			return ARGH_EVehicleCategory.POLICE_PATROL;
 		}
 		
 		// Default to patrol
-		return GRP_EVehicleCategory.POLICE_PATROL;
+		return ARGH_EVehicleCategory.POLICE_PATROL;
 	}
 }
 
 // Event handler for vehicle card interactions
-class GRP_VehicleCardWidgetHandler : ScriptedWidgetEventHandler
+class ARGH_VehicleCardWidgetHandler : ScriptedWidgetEventHandler
 {
-	protected GRP_VehicleCardWidget m_pCard;
+	protected ARGH_VehicleCardWidget m_pCard;
 	
 	//------------------------------------------------------------------------------------------------
-	void SetCard(GRP_VehicleCardWidget card)
+	void SetCard(ARGH_VehicleCardWidget card)
 	{
 		m_pCard = card;
 	}
@@ -137,7 +137,7 @@ class GRP_VehicleCardWidgetHandler : ScriptedWidgetEventHandler
 }
 
 // Vehicle card widget component
-class GRP_VehicleCardWidget
+class ARGH_VehicleCardWidget
 {
 	// Widget references
 	protected Widget m_wRoot;
@@ -151,10 +151,10 @@ class GRP_VehicleCardWidget
 	protected Widget m_wHoverOverlay;
 	
 	// Handler
-	protected ref GRP_VehicleCardWidgetHandler m_pHandler;
+	protected ref ARGH_VehicleCardWidgetHandler m_pHandler;
 	
 	// State
-	protected ref GRP_VehicleCardData m_pData;
+	protected ref ARGH_VehicleCardData m_pData;
 	protected bool m_bIsSelected;
 	protected bool m_bIsHovered;
 	
@@ -188,7 +188,7 @@ class GRP_VehicleCardWidget
 		m_wHoverOverlay = m_wRoot.FindAnyWidget("HoverOverlay");
 		
 		// Setup handler
-		m_pHandler = new GRP_VehicleCardWidgetHandler();
+		m_pHandler = new ARGH_VehicleCardWidgetHandler();
 		m_pHandler.SetCard(this);
 		m_wRoot.AddHandler(m_pHandler);
 		
@@ -203,7 +203,7 @@ class GRP_VehicleCardWidget
 	
 	//------------------------------------------------------------------------------------------------
 	//! Set the vehicle data to display
-	void SetData(GRP_VehicleCardData data)
+	void SetData(ARGH_VehicleCardData data)
 	{
 		m_pData = data;
 		
@@ -247,7 +247,7 @@ class GRP_VehicleCardWidget
 	
 	//------------------------------------------------------------------------------------------------
 	//! Get the vehicle data
-	GRP_VehicleCardData GetData()
+	ARGH_VehicleCardData GetData()
 	{
 		return m_pData;
 	}

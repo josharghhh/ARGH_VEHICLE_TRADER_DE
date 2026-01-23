@@ -1,7 +1,7 @@
-// GRP_VehicleForSaleDto.c
+// ARGH_VehicleForSaleDto.c
 // DTO for vehicle catalog items sent from server to client.
 
-class GRP_VehicleForSaleDto : JsonApiStruct
+class ARGH_VehicleForSaleDto : JsonApiStruct
 {
 	string m_sPrefab;
 	string m_sDisplayName;
@@ -13,7 +13,7 @@ class GRP_VehicleForSaleDto : JsonApiStruct
 	bool m_bInStock;
 
 	//------------------------------------------------------------------------------------------------
-	void GRP_VehicleForSaleDto()
+	void ARGH_VehicleForSaleDto()
 	{
 		m_sPrefab = string.Empty;
 		m_sDisplayName = string.Empty;
@@ -35,9 +35,9 @@ class GRP_VehicleForSaleDto : JsonApiStruct
 	}
 
 	//------------------------------------------------------------------------------------------------
-	static GRP_VehicleForSaleDto Create(string prefab, string displayName, int price, string category, int seats = 4, bool requiresLicense = false)
+	static ARGH_VehicleForSaleDto Create(string prefab, string displayName, int price, string category, int seats = 4, bool requiresLicense = false)
 	{
-		GRP_VehicleForSaleDto dto = new GRP_VehicleForSaleDto();
+		ARGH_VehicleForSaleDto dto = new ARGH_VehicleForSaleDto();
 		dto.m_sPrefab = prefab;
 		dto.m_sDisplayName = displayName;
 		dto.m_iPrice = price;

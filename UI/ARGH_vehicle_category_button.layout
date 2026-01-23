@@ -1,6 +1,6 @@
 ButtonWidgetClass {
  Name "CategoryButton"
- Slot LayoutSlot "{GRP-VD-CAT-SLOT}" {
+ Slot LayoutSlot "{ARGH-VD-CAT-SLOT}" {
   Padding 0 0 0 4
  }
  style blank

@@ -1,4 +1,4 @@
 modded enum ChimeraMenuPreset
 {
-	GRP_VehicleDealerMenuUI
+	ARGH_VehicleDealerMenuUI
 };

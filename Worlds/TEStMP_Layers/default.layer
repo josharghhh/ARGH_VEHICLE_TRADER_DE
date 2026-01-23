@@ -1,6 +1,6 @@
 GenericEntity : "{2990AB9DCE64226B}Prefabs/trader.et" {
  components {
-  GRP_VehicleDealerComponent "{0ED393C2E42B4D3C}" {
+  ARGH_VehicleDealerComponent "{0ED393C2E42B4D3C}" {
    m_sSpawnPointEntityName "CARTRADER1"
   }
  }

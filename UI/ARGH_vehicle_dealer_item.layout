@@ -1,6 +1,6 @@
 ButtonWidgetClass {
  Name "VehicleItemButton"
- Slot LayoutSlot "{GRP-VD-ITEM-SLOT}" {
+ Slot LayoutSlot "{ARGH-VD-ITEM-SLOT}" {
   Padding 0 0 0 6
  }
  style blank
