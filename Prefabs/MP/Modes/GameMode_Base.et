@@ -1,0 +1,9 @@
+SCR_BaseGameMode {
+ ID "56B2B479C6B96951"
+ components {
+ ARGH_VehicleDealerServiceComponent "{6874B6E3E81D6F2B}" {
+  m_iPurchaseOpMax 3
+  m_iPurchaseOpWindowSec 10
+  }
+ }
+}

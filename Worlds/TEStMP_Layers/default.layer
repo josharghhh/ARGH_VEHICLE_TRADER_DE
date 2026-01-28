@@ -1,16 +1,368 @@
-GenericEntity : "{2990AB9DCE64226B}Prefabs/trader.et" {
- components {
-  ARGH_VehicleDealerComponent "{0ED393C2E42B4D3C}" {
-   m_sSpawnPointEntityName "CARTRADER1"
+$grp GenericEntity {
+ DealershipSpawner {
+  editor EntityEditorProps "{6874AB6753AF1331}" {
+  }
+  coords 126.358 1 124.094
+  {
+   DecalEntity : "{B38FBA56FA69E392}Prefabs/Decals/Fluids/Decal_OilStain_01_large.et" {
+    coords -0.03 0 0.17
+    angles -89.98 -129.117 0
+    scale 2.686
+   }
   }
  }
- coords 129.455 1.889 129.537
- angles 0 -90 0
+ HeliTraderSpawn {
+  editor EntityEditorProps "{6874AB6753AF1331}" {
+  }
+  coords 109.597 0.998 123.318
+ }
+ {
+  components {
+   MeshObject "{68782206FE167B7B}" {
+    Object "{93C3C2177BCA5A22}Assets/Decals/Markings/Runway/Helipad_Circle_01.xob"
+   }
+  }
+  coords 109.417 1 123.308
+ }
+ {
+  components {
+   MeshObject "{68769E194E7EA3F9}" {
+    Object "{D2A8033DD3E85541}Assets/Sign/ARGH-SIGN.xob"
+   }
+  }
+  coords 127.946 5.068 137.886
+  angles 0 -180 0
+  scale 2.51
+  {
+   $grp StaticModelEntity : "{2DAE4A691D5D2283}Prefabs/Structures/Airport/LightRunway_03/POLE.et" {
+    {
+     coords -0.22 -0.972 0.02
+     angles 0 -180 0
+    }
+    {
+     coords -0.018 -0.972 0.02
+     angles 0 -180 0
+    }
+    {
+     coords 0.159 -0.972 0.02
+     angles 0 -180 0
+    }
+   }
+  }
+ }
 }
-GenericEntity : "{D006AF3CDC85BBA9}Prefabs/VehicleTrader.et" {
- coords 129.495 -0.427 129.536
- angles 0 -90 0
+$grp StaticModelEntity : "{36C4573A592FF87F}Prefabs/lights.et" {
+ {
+  coords 123.526 4.352 134.646
+  angles 0 180 0
+  {
+   StaticModelEntity {
+    ID "6878220E15DD1FD7"
+    coords 0 0 0
+    {
+     GenericEntity {
+      ID "5A02CEDB802F0770"
+      coords 0 0.297 0.031
+     }
+    }
+   }
+  }
+ }
+ {
+  coords 126.335 4.352 134.654
+  angles 0 180 0
+  {
+   StaticModelEntity {
+    ID "6878220E15DD1FD7"
+    coords 0 0 0
+    {
+     GenericEntity {
+      ID "5A02CEDB802F0770"
+      coords 0 0.297 0.031
+     }
+    }
+   }
+  }
+ }
+ {
+  coords 125.018 4.352 134.646
+  angles 0 180 0
+  {
+   StaticModelEntity {
+    ID "6878220E15DD1FD7"
+    coords 0 0 0
+    {
+     GenericEntity {
+      ID "5A02CEDB802F0770"
+      coords 0 0.297 0.031
+     }
+    }
+   }
+  }
+ }
+ {
+  coords 119.666 4.352 137.869
+  angles 0 0 0
+ }
+ {
+  coords 119.116 4.352 137.869
+  angles 0 0 0
+ }
+ {
+  coords 120.27 4.352 137.869
+  angles 0 0 0
+ }
+ {
+  coords 120.826 4.352 137.869
+  angles 0 0 0
+ }
+ {
+  coords 121.403 4.352 137.869
+  angles 0 0 0
+ }
+ {
+  coords 121.953 4.352 137.869
+  angles 0 0 0
+ }
+ {
+  coords 122.553 4.352 137.869
+  angles 0 0 0
+ }
+ {
+  coords 124.236 4.352 137.869
+  angles 0 0 0
+ }
+ {
+  coords 123.686 4.352 137.869
+  angles 0 0 0
+ }
+ {
+  coords 123.109 4.352 137.869
+  angles 0 0 0
+ }
+ {
+  coords 124.84 4.352 137.869
+  angles 0 0 0
+ }
+ {
+  coords 125.396 4.352 137.869
+  angles 0 0 0
+ }
+ {
+  coords 125.973 4.352 137.869
+  angles 0 0 0
+ }
+ {
+  coords 126.523 4.352 137.869
+  angles 0 0 0
+ }
+ {
+  coords 121.953 4.352 134.646
+  angles 0 180 0
+ }
 }
-GenericEntity CARTRADER1 : "{DD346352F0F30A7C}Prefabs/Systems/AmbientVehicles/AmbientVehicleSpawnpoint_Base.et" {
- coords 132.202 1 125.254
+SCR_DestructibleBuildingEntity : "{759CB41B98F5ED88}Prefabs/VehicleDealership.et" {
+ coords 124.034 0 135.161
+ angles 0 180 0
+ {
+  DecalEntity {
+   ID "68744A06ECF15A31"
+   coords 14.466 -0.041 11.717
+   angles -89.972 -129.117 79.436
+   scale 6.043
+  }
+  DecalEntity {
+   ID "68744A06ECF1E6C8"
+   coords -10.245 -0.459 8.926
+  }
+  GameEnvironmentProbeEntity {
+   ID "5218A82C47C58A1D"
+   coords -4.003 2.395 -1.227
+  }
+  GenericEntity {
+   ID "68744A06ECF15A32"
+   components {
+    MeshObject "{54969A6AAAADA251}" {
+     Materials {
+      MaterialAssignClass "{569AD76F500E7A2B}" {
+       SourceMaterial "Sign_Restrictive_NoEntryBothDir"
+       AssignedMaterial "{7FA41B9484BC9AAB}Assets/Structures/Signs/Warnings/Data/Sign_Restrictive_NoVehiclesExcepMoto_A.emat"
+      }
+      MaterialAssignClass "{569AD76F500E7A4B}" {
+       SourceMaterial "Sign_Restrictive_NoEntryBothDir_MLOD"
+       AssignedMaterial "{7A8B6A1AA5CB685F}Assets/Structures/Signs/Warnings/Data/Sign_Restrictive_NoPedestrians_A.emat"
+      }
+     }
+    }
+   }
+   coords 3.115 1.38 0.636
+   angles 0 -1.088 0
+  }
+  GenericEntity {
+   components {
+    MeshObject "{68769E194E7EA3F9}" {
+     Object "{D2A8033DD3E85541}Assets/Sign/ARGH-SIGN.xob"
+    }
+   }
+   coords 3.466 4.085 0.568
+   angles 0 -180 0
+   scale 2.51
+   {
+    $grp StaticModelEntity : "{2DAE4A691D5D2283}Prefabs/Structures/Airport/LightRunway_03/POLE.et" {
+     {
+      coords -0.22 -0.972 0.02
+      angles 0 -180 0
+     }
+     {
+      coords -0.018 -0.972 0.02
+      angles 0 -180 0
+     }
+     {
+      coords 0.159 -0.972 0.02
+      angles 0 -180 0
+     }
+    }
+   }
+  }
+ }
+}
+$grp SCR_ChimeraCharacter : "{79E55BE2B5EE102C}Prefabs/Characters/DE_Examples/DE_Trader_General.et" {
+ VehicleTrader {
+  components {
+   ARGH_VehicleDealerComponent "{68744A0D130ADEFD}" {
+    m_sDealerConfigPath "{A4C3C7A4D1E8F2B0}Configs/Systems/ARGH_VehicleDealer_Vehicles.conf"
+    m_sSpawnPointEntityName "DealershipSpawner"
+    m_fSpawnBehindDistance 10
+   }
+   DE_TraderComponent "{6708699D817EFCF0}" {
+    Enabled 0
+    traderName "Vehicle Dealership"
+   }
+   SCR_CharacterDamageManagerComponent "{55872AD7B4E959F2}" {
+    Enabled 0
+    "Additional hit zones" {
+     SCR_CharacterBloodHitZone Blood {
+     }
+    }
+    m_bPermitUnconsciousness 0
+   }
+   SCR_EditableCharacterComponent "{520EA1D2F659C85C}" {
+    m_UIInfo SCR_EditableEntityUIInfo "{5298E609432D192D}" {
+     Name "Vehicle Dealership"
+    }
+   }
+   SCR_CharacterIdentityComponent "{5584CBC63E092DBC}" {
+    Identity Identity "{5584CBC6363C648B}" {
+     Name "Vehicle"
+     Surname "Trader"
+    }
+   }
+   BaseLoadoutManagerComponent "{520EA1D2DB11821E}" {
+    Slots {
+     LoadoutSlotInfo Hat {
+      Prefab "{17674905311133D7}Prefabs/Characters/HeadGear/Hat_TruckerCap_01/Hat_TruckerCap_01_alsworth.et"
+     }
+     LoadoutSlotInfo Jacket {
+      Prefab "{C472D4DFBF3652EB}Prefabs/Characters/Uniforms/Jacket_Raincoat_01/Jacket_Raincoat_01_base.et"
+     }
+     LoadoutSlotInfo Pants {
+      Prefab "{DCF980831E880F6A}Prefabs/Characters/Uniforms/Pants_M88.et"
+     }
+    }
+   }
+   ActionsManagerComponent "{520EA1D2F659CE02}" {
+    additionalActions {
+     ARGH_OpenVehicleDealerAction "{68744A0D7A143F5E}" {
+      ParentContextList {
+       "InteractionPoint"
+       "default"
+      }
+      UIInfo UIInfo "{6C54C3C6B2F5C4A6}" {
+       Name "Open Vehicle Dealer"
+      }
+      ActionTitle "Open Vehicle Dealer"
+      VisibilityRange 5
+     }
+    }
+   }
+  }
+  coords 120.146 1 134.178
+  angles 0 154.443 0
+ }
+ FlyingTrader {
+  components {
+   ARGH_VehicleDealerComponent "{68744A0D130ADEFD}" {
+    m_sDealerId "Flying Vehicle Dealership"
+    m_sDealerName "Flying Vehicle Dealership"
+    m_sDealerConfigPath "{2C71C3035C6E7EE4}Configs/Systems/ARGH_FlyingVehicleDealer.conf"
+    m_sSpawnPointEntityName "HeliTraderSpawn"
+    m_fSpawnBehindDistance 10
+   }
+   DE_TraderComponent "{6708699D817EFCF0}" {
+    Enabled 0
+    traderName "Vehicle Dealership"
+   }
+   SCR_CharacterDamageManagerComponent "{55872AD7B4E959F2}" {
+    Enabled 0
+    "Additional hit zones" {
+     SCR_CharacterBloodHitZone Blood {
+     }
+    }
+    m_bPermitUnconsciousness 0
+   }
+   SCR_EditableCharacterComponent "{520EA1D2F659C85C}" {
+    m_UIInfo SCR_EditableEntityUIInfo "{5298E609432D192D}" {
+     Name "Vehicle Dealership"
+    }
+   }
+   SCR_CharacterIdentityComponent "{5584CBC63E092DBC}" {
+    Identity Identity "{5584CBC6363C648B}" {
+     Name "Vehicle"
+     Surname "Trader"
+    }
+   }
+   BaseLoadoutManagerComponent "{520EA1D2DB11821E}" {
+    Slots {
+     LoadoutSlotInfo Hat {
+      Prefab "{477D52F01DC45C55}Prefabs/Characters/HeadGear/Hat_TruckerCap_01/Hat_TruckerCap_01_pohona.et"
+     }
+     LoadoutSlotInfo Jacket {
+      Prefab "{B137B7CE988557D2}Prefabs/Characters/Uniforms/Suit_Pilot_US_01/Suit_Pilot_US_01.et"
+     }
+     LoadoutSlotInfo Pants {
+      Prefab ""
+     }
+    }
+   }
+   ActionsManagerComponent "{520EA1D2F659CE02}" {
+    additionalActions {
+     ARGH_OpenVehicleDealerAction "{68744A0D7A143F5E}" {
+      ParentContextList {
+       "InteractionPoint"
+       "default"
+      }
+      UIInfo UIInfo "{6C54C3C6B2F5C4A6}" {
+       Name "Open Vehicle Dealer"
+      }
+      ActionTitle "Open Vehicle Dealer"
+      VisibilityRange 5
+     }
+    }
+   }
+  }
+  coords 123.804 1 133.797
+  angles 0 175.893 0
+ }
+}
+GenericEntity : "{87A2AFFE4408E2FA}Prefabs/Structures/Signs/Warnings/SignAircraft_01.et" {
+ coords 124.545 2.367 134.577
+ angles 0 -180 0
+}
+$grp GenericEntity : "{B51EDA5FB43D2455}Prefabs/Systems/AmbientVehicles/ARGH_AmbientFlyingVehicleSpawnpoint_Generic.et" {
+ {
+  coords 112.22 1 84.236
+ }
+ {
+  coords 112.178 1 107.568
+ }
 }

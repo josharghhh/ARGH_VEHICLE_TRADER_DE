@@ -1,20 +1,62 @@
 ButtonWidgetClass {
  Name "CategoryButton"
  Slot LayoutSlot "{ARGH-VD-CAT-SLOT}" {
-  Padding 0 0 0 4
+  Padding 0 0 0 12
  }
+ Color 0 0 0 0
  style blank
- {
-  TextWidgetClass {
-   Name "CategoryText"
-   Slot ButtonWidgetSlot {
-    HorizontalAlign 0
-    VerticalAlign 3
-    Padding 8 6 8 6
+ components {
+  SCR_ButtonTextComponent {
+   m_bMouseOverToFocus 1
+  }
+  SCR_ModularButtonComponent {
+   m_aEffects {
+    SCR_ButtonEffectColor {
+     m_eEvents 6144
+     m_sWidgetName "CategoryBg"
+     m_fAnimationTime 0.1
+     m_cFocusGained 0.18 0.8 0.78 0.22
+     m_cFocusLost 0.12 0.13 0.16 0.92
+    }
+    SCR_ButtonEffectColor {
+     m_eEvents 6144
+     m_sWidgetName "CategoryText"
+     m_fAnimationTime 0.1
+     m_cFocusGained 0.18 0.8 0.78 1
+     m_cFocusLost 0.94 0.95 0.97 1
+    }
    }
-   Color 0.7 0.7 0.7 1
-   Text "Category"
-   "Font Size" 13
+   m_bFocusOnMouseEnter 1
+  }
+ }
+ {
+  OverlayWidgetClass "{6874AB60883459E8}" {
+   Name "CategoryOverlay"
+   Slot ButtonWidgetSlot "{6874AB60883459CB}" {
+    HorizontalAlign 3
+    VerticalAlign 3
+   }
+   {
+    ImageWidgetClass "{6874AB60883459B0}" {
+     Name "CategoryBg"
+     Slot OverlayWidgetSlot "{6874AB608834599A}" {
+      HorizontalAlign 3
+      VerticalAlign 3
+     }
+     Color 0.12 0.13 0.16 0.92
+    }
+    TextWidgetClass "{6874AB608834415A}" {
+     Name "CategoryText"
+     Slot OverlayWidgetSlot "{6874AB608834414D}" {
+      HorizontalAlign 0
+      VerticalAlign 3
+      Padding 16 12 16 12
+     }
+     Color 0.95 0.96 0.97 1
+     Text "Category"
+     "Font Size" 14
+    }
+   }
   }
  }
 }

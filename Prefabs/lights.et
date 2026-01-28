@@ -1,0 +1,11 @@
+StaticModelEntity : "{599BDE36FBAFB706}Prefabs/Structures/Airport/LightRunway_03/LightRunway_03_light_off.et" {
+ ID "F0DBA538AC2A0552"
+ coords 121.953 4.352 134.543
+ angles 0 180 0
+ {
+  StaticModelEntity : "{C1BC9D802080EF43}Prefabs/Structures/Airport/LightRunway_03/LightRunway_03_light.et" {
+   ID "6878220E15DD1FD7"
+   coords 0 0 0
+  }
+ }
+}

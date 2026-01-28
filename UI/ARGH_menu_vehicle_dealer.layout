@@ -8,13 +8,23 @@ FrameWidgetClass {
    Name "DimBackground"
    Slot FrameWidgetSlot "{ARGH-VD-DIM-SLOT}" {
     Anchor 0 0 1 1
+    PositionX 0
+    OffsetLeft 0
+    PositionY 0
+    OffsetTop 0
+    SizeX 0
+    OffsetRight 0
+    SizeY 0
+    OffsetBottom 0
    }
-   Color 0 0 0 0.85
+   Color 0 0 0 0.62
   }
   FrameWidgetClass "{ARGH-VD-DIALOG}" {
    Name "DialogFrame"
    Slot FrameWidgetSlot "{ARGH-VD-DIALOG-SLOT}" {
-    Anchor 0.1 0.1 0.9 0.9
+    Anchor 0.08 0.08 0.92 0.92
+    OffsetRight 0
+    OffsetBottom 0
    }
    {
     ImageWidgetClass "{ARGH-VD-BG}" {
@@ -24,7 +34,9 @@ FrameWidgetClass {
       OffsetRight 0
       OffsetBottom 0
      }
-     Color 0.02 0.024 0.028 0.98
+     Color 0.07 0.08 0.1 0.94
+     Texture "{D670D32536768B22}Assets/Images/ui_round_dialog_1612x908.edds"
+     Size 1612 908
     }
     VerticalLayoutWidgetClass "{ARGH-VD-MAIN}" {
      Name "MainLayout"
@@ -33,13 +45,14 @@ FrameWidgetClass {
       OffsetRight 0
       OffsetBottom 0
      }
+     Color 0 0 0 0
      {
       SizeLayoutWidgetClass "{ARGH-VD-HEADER-SIZE}" {
        Name "HeaderSize"
        Slot LayoutSlot "{ARGH-VD-HEADER-SIZE-SLOT}" {
        }
        AllowHeightOverride 1
-       HeightOverride 48
+       HeightOverride 42
        {
         OverlayWidgetClass "{ARGH-VD-HEADER}" {
          Name "Header"
@@ -54,19 +67,31 @@ FrameWidgetClass {
             HorizontalAlign 3
             VerticalAlign 3
            }
-           Color 0.03 0.035 0.04 1
+           Color 0.1 0.11 0.14 0.96
+           Texture "{7CD32A63E9340E55}Assets/Images/ui_round_header_1612x44.edds"
+          }
+          ImageWidgetClass "{ARGH-VD-HEADER-LOGO}" {
+           Name "HeaderLogo"
+           Slot OverlayWidgetSlot "{ARGH-VD-HEADER-LOGO-SLOT}" {
+            HorizontalAlign 0
+            VerticalAlign 3
+            Padding 16 0 0 0
+           }
+           Color 1 1 1 1
+           Texture "{C5CA2ACA5D988F23}Assets/Images/signui/ARGH_top_logo_transparent.edds"
+           Size 100 28
+           "Shadow Color" 1 0.6203 0.0524 0.6912
           }
           TextWidgetClass "{ARGH-VD-TITLE}" {
            Name "TitleText"
            Slot OverlayWidgetSlot "{ARGH-VD-TITLE-SLOT}" {
             HorizontalAlign 3
             VerticalAlign 3
-            Padding 16 0 0 0
            }
-           Color 0.85 0.85 0.85 1
+           Color 0.95 0.96 0.97 1
            Text "VEHICLE DEALER"
-           "Font Size" 20
-           "Horizontal Alignment" Left
+           "Font Size" 18
+           "Horizontal Alignment" Center
            "Vertical Alignment" Center
           }
           ButtonWidgetClass "{ARGH-VD-CLOSE}" {
@@ -84,7 +109,7 @@ FrameWidgetClass {
               HorizontalAlign 3
               VerticalAlign 3
              }
-             Color 0.6 0.6 0.6 1
+             Color 0.95 0.96 0.97 1
              Text "X"
              "Font Size" 16
             }
@@ -97,6 +122,7 @@ FrameWidgetClass {
       HorizontalLayoutWidgetClass "{ARGH-VD-BODY}" {
        Name "BodyLayout"
        Slot LayoutSlot "{ARGH-VD-BODY-SLOT}" {
+        Padding 12 12 12 12
         SizeMode Fill
         FillWeight 1
        }
@@ -106,7 +132,7 @@ FrameWidgetClass {
          Slot LayoutSlot "{ARGH-VD-CATS-SIZE-SLOT}" {
          }
          AllowWidthOverride 1
-         WidthOverride 180
+         WidthOverride 250
          {
           OverlayWidgetClass "{ARGH-VD-CATS}" {
            Name "CategoriesPanel"
@@ -120,33 +146,53 @@ FrameWidgetClass {
              Slot OverlayWidgetSlot "{ARGH-VD-CATS-BG-SLOT}" {
               HorizontalAlign 3
               VerticalAlign 3
+              Padding -5 -5 -5 -5
              }
-             Color 0.025 0.03 0.035 1
+             Color 0.1 0.11 0.14 0.92
+             Texture "{1F1886B8A2D8E808}Assets/Images/ui_round_categories_252x840.edds"
             }
             VerticalLayoutWidgetClass "{ARGH-VD-CATS-LIST}" {
              Name "CategoryList"
              Slot OverlayWidgetSlot "{ARGH-VD-CATS-LIST-SLOT}" {
               HorizontalAlign 3
               VerticalAlign 0
-              Padding 8 8 8 8
+              Padding 12 12 12 12
              }
              {
               ButtonWidgetClass "{ARGH-VD-CAT-ALL}" {
                Name "CategoryAll"
                Slot LayoutSlot "{ARGH-VD-CAT-ALL-SLOT}" {
-                Padding 0 0 0 4
+                Padding 0 0 0 6
                }
+               style blank
                {
-                TextWidgetClass "{ARGH-VD-CAT-ALL-TXT}" {
-                 Name "CategoryAllText"
-                 Slot ButtonWidgetSlot "{ARGH-VD-CAT-ALL-TXT-SLOT}" {
-                  HorizontalAlign 0
+                OverlayWidgetClass "{ARGH-VD-CAT-ALL-OL}" {
+                 Name "CategoryAllOverlay"
+                 Slot ButtonWidgetSlot "{ARGH-VD-CAT-ALL-OL-SLOT}" {
+                  HorizontalAlign 3
                   VerticalAlign 3
-                  Padding 8 6 8 6
                  }
-                 Color 0.7 0.7 0.7 1
-                 Text "All Vehicles"
-                 "Font Size" 13
+                 {
+                  ImageWidgetClass "{ARGH-VD-CAT-ALL-BG}" {
+                   Name "CategoryBg"
+                   Slot OverlayWidgetSlot "{ARGH-VD-CAT-ALL-BG-SLOT}" {
+                    HorizontalAlign 3
+                    VerticalAlign 3
+                   }
+                   Color 0.12 0.13 0.16 0.92
+                  }
+                  TextWidgetClass "{ARGH-VD-CAT-ALL-TXT}" {
+                   Name "CategoryText"
+                   Slot OverlayWidgetSlot "{ARGH-VD-CAT-ALL-TXT-SLOT}" {
+                    HorizontalAlign 0
+                    VerticalAlign 3
+                    Padding 12 8 12 8
+                   }
+                   Color 0.94 0.95 0.97 1
+                   Text "All Vehicles"
+                   "Font Size" 14
+                  }
+                 }
                 }
                }
               }
@@ -163,21 +209,143 @@ FrameWidgetClass {
           FillWeight 1
          }
          {
-          ImageWidgetClass "{ARGH-VD-GRID-BG}" {
-           Name "GridBg"
-           Slot FrameWidgetSlot "{ARGH-VD-GRID-BG-SLOT}" {
+          VerticalLayoutWidgetClass "{ARGH-VD-GRID-AREA-LAYOUT}" {
+           Name "VehicleGridAreaLayout"
+           Slot FrameWidgetSlot "{ARGH-VD-GRID-AREA-LAYOUT-SLOT}" {
             Anchor 0 0 1 1
+            OffsetRight 0
+            OffsetBottom 0
            }
-           Color 0.015 0.018 0.022 1
-          }
-          VerticalLayoutWidgetClass "{ARGH-VD-GRID}" {
-           Name "VehicleGrid"
-           Slot FrameWidgetSlot "{ARGH-VD-GRID-SLOT}" {
-            Anchor 0 0 1 1
-            OffsetLeft 12
-            OffsetTop 12
-            OffsetRight -12
-            OffsetBottom -12
+           {
+            SizeLayoutWidgetClass "{ARGH-VD-PREVIEW-SIZE}" {
+             Name "VehiclePreviewSize"
+             Slot LayoutSlot "{ARGH-VD-PREVIEW-SIZE-SLOT}" {
+              Padding 0 0 0 12
+             }
+             AllowHeightOverride 1
+             HeightOverride 320
+             {
+              OverlayWidgetClass "{ARGH-VD-PREVIEW-OL}" {
+               Name "VehiclePreviewContainer"
+               Slot AlignableSlot "{ARGH-VD-PREVIEW-OL-SLOT}" {
+                HorizontalAlign 3
+                VerticalAlign 3
+               }
+               {
+                ImageWidgetClass "{ARGH-VD-PREVIEW-BG}" {
+                 Name "VehiclePreviewBackground"
+                 Slot OverlayWidgetSlot "{ARGH-VD-PREVIEW-BG-SLOT}" {
+                  HorizontalAlign 3
+                  VerticalAlign 3
+                  Padding 5 5 5 5
+                 }
+                 Color 0.1 0.11 0.14 0.92
+                 Texture "{55BD0CF70B02A041}Assets/Images/ui_round_preview_1020x320.edds"
+                }
+                ItemPreviewWidgetClass "{ARGH-VD-PREVIEW-3D}" {
+                 Name "VehiclePreview3D"
+                 Slot OverlayWidgetSlot "{ARGH-VD-PREVIEW-3D-SLOT}" {
+                  HorizontalAlign 3
+                  VerticalAlign 3
+                  Padding 12 12 12 12
+                 }
+                 Color 0.1 0.11 0.14 1
+                }
+                ImageWidgetClass "{ARGH-VD-PREVIEW-IMG}" {
+                 Name "VehiclePreviewImage"
+                 Slot OverlayWidgetSlot "{ARGH-VD-PREVIEW-IMG-SLOT}" {
+                  HorizontalAlign 3
+                  VerticalAlign 3
+                  Padding 5 0 0 0
+                 }
+                 Color 0.1 0.11 0.14 1
+                }
+               }
+              }
+             }
+            }
+            FrameWidgetClass "{ARGH-VD-LIST-FRAME}" {
+             Name "VehicleListFrame"
+             Slot LayoutSlot "{ARGH-VD-LIST-FRAME-SLOT}" {
+              Padding 5 0 0 0
+              SizeMode Fill
+              FillWeight 1
+             }
+             {
+              ImageWidgetClass "{ARGH-VD-GRID-BG}" {
+               Name "GridBg"
+               Slot FrameWidgetSlot "{ARGH-VD-GRID-BG-SLOT}" {
+                Anchor 0 0 1 1
+                OffsetRight 0
+                OffsetBottom 0
+               }
+               Color 0.1 0.11 0.14 0.92
+               Texture "{DE094713BEF91C72}Assets/Images/ui_round_grid_1020x508.edds"
+              }
+              ScrollLayoutWidgetClass "{ARGH-VD-GRID-SCROLL}" {
+               Name "VehicleGridScroll"
+               Slot FrameWidgetSlot "{ARGH-VD-GRID-SCROLL-SLOT}" {
+                Anchor 0.016 0.032 0.988 1
+                PositionX -4.379
+                OffsetLeft -4.379
+                PositionY -4.379
+                OffsetTop -4.379
+                SizeX 28.664
+                OffsetRight 0
+                SizeY 16.379
+                OffsetBottom 0
+               }
+               {
+                VerticalLayoutWidgetClass "{ARGH-VD-GRID}" {
+                 Name "VehicleGrid"
+                 Slot AlignableSlot "{ARGH-VD-GRID-SLOT}" {
+                  HorizontalAlign 3
+                  VerticalAlign 0
+                 }
+                }
+               }
+              }
+              FrameWidgetClass "{ARGH-VD-GRID-SB}" {
+               Name "VehicleGridScrollBar"
+               Slot FrameWidgetSlot "{ARGH-VD-GRID-SB-SLOT}" {
+                Anchor 1 0 1 1
+                OffsetLeft -8
+                OffsetTop 12
+                OffsetRight -4
+                OffsetBottom -12
+               }
+               {
+                ImageWidgetClass "{ARGH-VD-GRID-SB-TRACK}" {
+                 Name "VehicleGridScrollTrack"
+                 Slot FrameWidgetSlot "{ARGH-VD-GRID-SB-TRACK-SLOT}" {
+                  Anchor 0 0 1 1
+                  PositionX -0.867
+                  OffsetLeft -0.867
+                  PositionY 0
+                  OffsetTop 0
+                  SizeX 0.867
+                  OffsetRight 0
+                  SizeY 30
+                  OffsetBottom 0
+                 }
+                 Color 0.08 0.09 0.12 0.6
+                }
+                ImageWidgetClass "{ARGH-VD-GRID-SB-THUMB}" {
+                 Name "VehicleGridScrollThumb"
+                 Slot FrameWidgetSlot "{ARGH-VD-GRID-SB-THUMB-SLOT}" {
+                  Anchor 0 0 0 0
+                  OffsetLeft 0
+                  OffsetTop 0
+                  SizeX 8
+                  OffsetRight -8
+                  OffsetBottom -30
+                 }
+                 Color 0.18 0.8 0.78 0.8
+                }
+               }
+              }
+             }
+            }
            }
           }
          }
@@ -187,7 +355,8 @@ FrameWidgetClass {
          Slot LayoutSlot "{ARGH-VD-DETAILS-SIZE-SLOT}" {
          }
          AllowWidthOverride 1
-         WidthOverride 280
+         WidthOverride 360
+         AllowAspectRatioForce 0
          {
           OverlayWidgetClass "{ARGH-VD-DETAILS}" {
            Name "DetailsPanel"
@@ -201,8 +370,10 @@ FrameWidgetClass {
              Slot OverlayWidgetSlot "{ARGH-VD-DETAILS-BG-SLOT}" {
               HorizontalAlign 3
               VerticalAlign 3
+              Padding 5 0 5 0
              }
-             Color 0.025 0.03 0.035 1
+             Color 0.1 0.11 0.14 0.92
+             Texture "{4AE99C4432C765E1}Assets/Images/ui_round_details_320x840.edds"
             }
             VerticalLayoutWidgetClass "{ARGH-VD-DETAILS-CONTENT}" {
              Name "DetailsContent"
@@ -215,24 +386,59 @@ FrameWidgetClass {
               TextWidgetClass "{ARGH-VD-VNAME}" {
                Name "VehicleName"
                Slot LayoutSlot "{ARGH-VD-VNAME-SLOT}" {
-                Padding 0 0 0 8
+                Padding 0 0 0 10
                }
-               Color 0.85 0.85 0.85 1
+               Color 0.95 0.96 0.97 1
                Text "Select a vehicle"
-               "Font Size" 16
+               "Font Size" 17
+               Wrap 0
               }
               TextWidgetClass "{ARGH-VD-VPRICE}" {
                Name "VehiclePrice"
                Slot LayoutSlot "{ARGH-VD-VPRICE-SLOT}" {
-                Padding 0 0 0 16
+                Padding 0 0 0 14
                }
-               Color 0.4 0.7 0.4 1
+               Color 0.98 0.82 0.35 1
                Text "$0"
-               "Font Size" 18
+               "Font Size" 30
               }
               ButtonWidgetClass "{ARGH-VD-BUY-BTN}" {
                Name "BuyButton"
                Slot LayoutSlot "{ARGH-VD-BUY-BTN-SLOT}" {
+                Padding 0 0 0 8
+               }
+               components {
+                SCR_ModularButtonComponent "{687832D04210FA69}" {
+                 m_aEffects {
+                  SCR_ButtonEffectColor "{687832D04210FA31}" {
+                   m_eEvents 24581
+                   m_sWidgetName "BuyBg"
+                   m_fAnimationTime 0.08
+                   m_cDefault 0.18 0.8 0.78 0.85
+                   m_cHovered 0.2 0.88 0.86 1
+                   m_cActivated 0.22 0.95 0.92 1
+                   m_cDisabled 0.1 0.11 0.14 0.4
+                   m_cFocusGained 0.2 0.88 0.86 1
+                   m_cFocusLost 0.18 0.8 0.78 0.85
+                  }
+                  SCR_ButtonEffectColor "{687832D04210FA08}" {
+                   m_eEvents 24581
+                   m_sWidgetName "BuyText"
+                   m_fAnimationTime 0.08
+                   m_cDefault 0.06 0.07 0.09 1
+                   m_cHovered 0.06 0.07 0.09 1
+                   m_cActivated 0.06 0.07 0.09 1
+                   m_cDisabled 0.5 0.52 0.56 0.7
+                   m_cFocusGained 0.06 0.07 0.09 1
+                   m_cFocusLost 0.06 0.07 0.09 1
+                  }
+                  SCR_ButtonEffectSound "{687832D04210FAF6}" {
+                   m_eEvents STATE_ACTIVATED
+                   m_sSound "SOUND_FE_BUTTON_SELECT"
+                  }
+                 }
+                 m_bFocusOnMouseEnter 1
+                }
                }
                {
                 OverlayWidgetClass "{ARGH-VD-BUY-OL}" {
@@ -248,7 +454,7 @@ FrameWidgetClass {
                     HorizontalAlign 3
                     VerticalAlign 3
                    }
-                   Color 0.04 0.06 0.04 1
+                   Color 0.18 0.8 0.78 0.85
                   }
                   TextWidgetClass "{ARGH-VD-BUY-TXT}" {
                    Name "BuyText"
@@ -257,7 +463,7 @@ FrameWidgetClass {
                     VerticalAlign 3
                     Padding 16 10 16 10
                    }
-                   Color 0.5 0.8 0.5 1
+                   Color 0.06 0.07 0.09 1
                    Text "PURCHASE"
                    "Font Size" 14
                   }
@@ -265,50 +471,113 @@ FrameWidgetClass {
                 }
                }
               }
-              TextWidgetClass "{ARGH-VD-WALLET-LBL}" {
-               Name "WalletLabel"
+              HorizontalLayoutWidgetClass "{ARGH-VD-WALLET-ROW}" {
+               Name "WalletRow"
                Slot LayoutSlot "{ARGH-VD-WALLET-LBL-SLOT}" {
-                Padding 0 16 0 2
+                Padding 0 10 0 2
                }
-               Color 0.6 0.6 0.6 1
-               Text "Wallet"
-               "Font Size" 12
+               {
+                ImageWidgetClass "{ARGH-VD-WALLET-ICON}" {
+                 Name "WalletIcon"
+                 Slot LayoutSlot "{ARGH-VD-WALLET-ICON-SLOT}" {
+                  VerticalAlign 3
+                  Padding 0 0 10 0
+                 }
+                 Color 1 1 1 1
+                 Texture "{5A23F1D138E87842}Assets/Images/signui/wallet.edds"
+                 Size 32 32
+                }
+                TextWidgetClass "{ARGH-VD-WALLET-LBL}" {
+                 Name "WalletLabel"
+                 Slot LayoutSlot "{ARGH-VD-WALLET-LBL-TXT-SLOT}" {
+                  VerticalAlign 1
+                  Padding 0 0 0 0
+                 }
+                 Color 0.62 0.88 0.62 1
+                 Text "Current Wallet/Cash Available:"
+                 "Font Size" 12
+                }
+               }
               }
               TextWidgetClass "{ARGH-VD-WALLET-VALUE}" {
                Name "WalletValue"
                Slot LayoutSlot "{ARGH-VD-WALLET-VALUE-SLOT}" {
                 Padding 0 0 0 10
                }
-               Color 0.75 0.75 0.75 1
+               Color 0.82 1 0.82 1
                Text "$0"
-               "Font Size" 14
+               "Font Size" 28
               }
-              TextWidgetClass "{ARGH-VD-BANK-LBL}" {
-               Name "BankLabel"
+              HorizontalLayoutWidgetClass "{ARGH-VD-BANK-ROW}" {
+               Name "BankRow"
                Slot LayoutSlot "{ARGH-VD-BANK-LBL-SLOT}" {
-                Padding 0 6 0 2
+                Padding 0 4 0 2
                }
-               Color 0.6 0.6 0.6 1
-               Text "Bank"
-               "Font Size" 12
+               {
+                ImageWidgetClass "{ARGH-VD-BANK-ICON}" {
+                 Name "BankIcon"
+                 Slot LayoutSlot "{ARGH-VD-BANK-ICON-SLOT}" {
+                  VerticalAlign 3
+                  Padding 0 0 10 0
+                 }
+                 Color 1 1 1 1
+                 Texture "{EE4A9ED532A9EFBA}Assets/Images/signui/bank.edds"
+                 Size 32 32
+                }
+                TextWidgetClass "{ARGH-VD-BANK-LBL}" {
+                 Name "BankLabel"
+                 Slot LayoutSlot "{ARGH-VD-BANK-LBL-TXT-SLOT}" {
+                  VerticalAlign 1
+                  Padding 0 0 0 0
+                 }
+                 Color 0.58 0.78 0.95 1
+                 Text "Bank Balance Available"
+                 "Font Size" 12
+                }
+               }
               }
               TextWidgetClass "{ARGH-VD-BANK-VALUE}" {
                Name "BankValue"
                Slot LayoutSlot "{ARGH-VD-BANK-VALUE-SLOT}" {
                 Padding 0 0 0 10
                }
-               Color 0.75 0.75 0.75 1
+               Color 0.72 0.9 1 1
                Text "$0"
-               "Font Size" 14
+               "Font Size" 28
               }
               TextWidgetClass "{ARGH-VD-STATUS}" {
                Name "StatusText"
                Slot LayoutSlot "{ARGH-VD-STATUS-SLOT}" {
                 Padding 0 8 0 0
                }
-               Color 0.7 0.55 0.3 1
+               Color 0.9 0.7 0.4 1
                Text ""
                "Font Size" 12
+              }
+              TextWidgetClass "{ARGH-VD-HINTS}" {
+               Name "ControlsHint"
+               Slot LayoutSlot "{ARGH-VD-HINTS-SLOT}" {
+                Padding 0 8 0 0
+               }
+               Color 0.18 0.8 0.78 1
+               "Inherit Color" 1
+               Text "A / Enter: Purchase     B / Esc: Back"
+               "Font Size" 11
+               FontProperties FontProperties "{6874AB66B8E05C69}" {
+                Font "{EABA4FE9D014CCEF}UI/Fonts/RobotoCondensed/RobotoCondensed_Bold.fnt"
+               }
+              }
+              TextWidgetClass "{6874AB667B2F9E6E}" {
+               Name "ControlsHint0"
+               Slot LayoutSlot "{ARGH-VD-HINTS-SLOT}" {
+                Padding 0 8 0 0
+               }
+               Color 0.18 0.8 0.78 1
+               Text "D-Pad / Arrows: Navigate"
+               "Font Size" 11
+               FontProperties FontProperties "{6874AB66A213B945}" {
+                Font "{EABA4FE9D014CCEF}UI/Fonts/RobotoCondensed/RobotoCondensed_Bold.fnt"
+               }
               }
              }
             }

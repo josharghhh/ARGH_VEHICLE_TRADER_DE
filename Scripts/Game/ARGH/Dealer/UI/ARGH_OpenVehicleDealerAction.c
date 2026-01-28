@@ -31,7 +31,23 @@ class ARGH_OpenVehicleDealerAction : SCR_ScriptedUserAction
 	override bool CanBeShownScript(IEntity user)
 	{
 		if (ARGH_VehicleDealerMenuContext.IsMenuOpen())
-			return false;
+		{
+			if (!ARGH_VehicleDealerOverlayUI.IsOpen())
+			{
+				MenuManager menuManager = GetGame().GetMenuManager();
+				MenuBase topMenu;
+				if (menuManager)
+					topMenu = menuManager.GetTopMenu();
+				if (!ARGH_VehicleDealerMenuUI.Cast(topMenu))
+					ARGH_VehicleDealerMenuContext.Reset();
+				else
+					return false;
+			}
+			else
+			{
+				return false;
+			}
+		}
 
 		return super.CanBeShownScript(user);
 	}

@@ -1,3 +1,8 @@
 GenericEntity : "{DD346352F0F30A7C}Prefabs/Systems/AmbientVehicles/AmbientVehicleSpawnpoint_Base.et" {
  ID "5D5E85F95F31C6F0"
+ components {
+  RplComponent "{6874B6E2E7E0176D}" {
+  }
+ }
+ coords 142.283 1 116.187
 }

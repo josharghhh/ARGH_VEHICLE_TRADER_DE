@@ -30,6 +30,9 @@ class ARGH_AmbientFlyingVehicleSpawnRule : Managed
 
 	[Attribute(defvalue: "1.0", uiwidget: UIWidgets.EditBox, desc: "Spawn weight for this prefab (0 disables).")]
 	float m_fSpawnWeight;
+
+[Attribute(defvalue: "0", uiwidget: UIWidgets.EditBox, desc: "Price override for dealers (0 uses dealer default).")]
+	int m_iSupplyCost;
 }
 
 // -----------------------------
@@ -224,6 +227,7 @@ class ARGH_SCR_AmbientFlyingVehicleSpawnPointComponent : SCR_AmbientVehicleSpawn
 		if (!cfg)
 			return;
 
+		cfg.m_rVehicleCatalog = "{B7D4C5E6123F4A90}Configs/EntityCatalog/ARGH_AmbientFlyingVehicles.conf";
 		cfg.m_bRulesIgnoreSpawnpointLabels = true;
 		cfg.m_bOverrideLabelsWithFlyingCriteria = true;
 		cfg.m_fSpawnChance = 0.369;
@@ -444,6 +448,31 @@ class ARGH_SCR_AmbientFlyingVehicleSpawnPointComponent : SCR_AmbientVehicleSpawn
 
 			if (g.m_aChildren)
 					FlattenFlyingEnabledGroups(g.m_aChildren, outRules, enabled);
+		}
+	}
+
+	private static void FlattenAllFlyingGroups(array<ref ARGH_AmbientFlyingVehicleGroup> groups, array<ref ARGH_AmbientFlyingVehicleSpawnRule> outRules)
+	{
+		if (!groups || !outRules)
+			return;
+
+		foreach (ARGH_AmbientFlyingVehicleGroup g : groups)
+		{
+			if (!g)
+				continue;
+
+			if (g.m_aVehicles)
+			{
+				foreach (ARGH_AmbientFlyingVehicleSpawnRule r : g.m_aVehicles)
+				{
+					if (!r)
+						continue;
+					outRules.Insert(r);
+				}
+			}
+
+			if (g.m_aChildren)
+				FlattenAllFlyingGroups(g.m_aChildren, outRules);
 		}
 	}
 
@@ -781,6 +810,31 @@ class ARGH_SCR_AmbientFlyingVehicleSpawnPointComponent : SCR_AmbientVehicleSpawn
 			return;
 		}
 
+		map<string, ref ARGH_AmbientFlyingVehicleSpawnRule> existingByPrefab = new map<string, ref ARGH_AmbientFlyingVehicleSpawnRule>();
+		array<ref ARGH_AmbientFlyingVehicleGroup> existingGroups = {};
+		if (bc.Get("m_aGroups", existingGroups) && existingGroups.Count() > 0)
+		{
+			array<ref ARGH_AmbientFlyingVehicleSpawnRule> existingFlat = {};
+			FlattenAllFlyingGroups(existingGroups, existingFlat);
+			foreach (ARGH_AmbientFlyingVehicleSpawnRule rule : existingFlat)
+			{
+				if (!rule || rule.m_rPrefab.IsEmpty())
+					continue;
+				existingByPrefab.Set(rule.m_rPrefab, rule);
+			}
+		}
+
+		array<ref ARGH_AmbientFlyingVehicleSpawnRule> existingRules = {};
+		if (bc.Get("m_aVehicles", existingRules) && existingRules.Count() > 0)
+		{
+			foreach (ARGH_AmbientFlyingVehicleSpawnRule rule : existingRules)
+			{
+				if (!rule || rule.m_rPrefab.IsEmpty())
+					continue;
+				existingByPrefab.Set(rule.m_rPrefab, rule);
+			}
+		}
+
 		map<string, ResourceName> uniqueResources = new map<string, ResourceName>();
 		int fromEt = CollectFlyingVehiclePrefabsFromAllEt(cfg, uniqueResources);
 
@@ -828,6 +882,17 @@ class ARGH_SCR_AmbientFlyingVehicleSpawnPointComponent : SCR_AmbientVehicleSpawn
 			rule.m_rPrefab = resName;
 			rule.m_bEnabled = true;
 			rule.m_fSpawnWeight = 1.0;
+			rule.m_iSupplyCost = 0;
+
+			ARGH_AmbientFlyingVehicleSpawnRule existingRule;
+			if (existingByPrefab.Find(resName, existingRule) && existingRule)
+			{
+				rule.m_bEnabled = existingRule.m_bEnabled;
+				rule.m_fSpawnWeight = existingRule.m_fSpawnWeight;
+				rule.m_iSupplyCost = existingRule.m_iSupplyCost;
+				if (!existingRule.m_sDisplayName.IsEmpty())
+					rule.m_sDisplayName = existingRule.m_sDisplayName;
+			}
 			categoryGroup.m_aVehicles.Insert(rule);
 		}
 
@@ -956,6 +1021,9 @@ class ARGH_SCR_AmbientFlyingVehicleSpawnPointComponent : SCR_AmbientVehicleSpawn
 	{
 		m_SavedFaction = faction;
 
+		// Preserve base selection logic before overriding with catalog, if available.
+		super.Update(faction);
+
 		ARGH_AmbientFlyingVehicleSpawnConfig cfg = GetAmbientFlyingVehicleSpawnConfig();
 		bool dbg = (cfg && cfg.m_bDebugLogCatalog);
 
@@ -985,8 +1053,7 @@ class ARGH_SCR_AmbientFlyingVehicleSpawnPointComponent : SCR_AmbientVehicleSpawn
 			}
 		}
 
-		m_sPrefab = string.Empty;
 		if (dbg)
-			Print("[ARGH_FLYING_CATALOG] No catalog selection available -> no spawn");
+			Print("[ARGH_FLYING_CATALOG] No catalog selection available -> keeping base selection");
 	}
 }

@@ -1,0 +1,17 @@
+MetaFileClass {
+ Name "{E4C8B3D7DD5641F79399F0032DA65F82}Prefabs/Systems/AmbientVehicles/ARGH_AmbientVehicleSpawnpoint_Generic.et"
+ Configurations {
+  EntityTemplateResourceClass PC {
+  }
+  EntityTemplateResourceClass XBOX_ONE : PC {
+  }
+  EntityTemplateResourceClass XBOX_SERIES : PC {
+  }
+  EntityTemplateResourceClass PS4 : PC {
+  }
+  EntityTemplateResourceClass PS5 : PC {
+  }
+  EntityTemplateResourceClass HEADLESS : PC {
+  }
+ }
+}

@@ -35,9 +35,12 @@
 		[Attribute(defvalue: "1", uiwidget: UIWidgets.CheckBox, desc: "Enable this prefab for ambient spawning.")]
 		bool m_bEnabled;
 
-		[Attribute(defvalue: "1.0", uiwidget: UIWidgets.EditBox, desc: "Spawn weight for this prefab (0 disables).")]
-		float m_fSpawnWeight;
-	}
+	[Attribute(defvalue: "1.0", uiwidget: UIWidgets.EditBox, desc: "Spawn weight for this prefab (0 disables).")]
+	float m_fSpawnWeight;
+
+	[Attribute(defvalue: "0", uiwidget: UIWidgets.EditBox, desc: "Price override for dealers (0 uses dealer default).")]
+	int m_iSupplyCost;
+}
 
 	// -----------------------------
 	// Group node (Vehicle Model)
@@ -284,6 +287,7 @@
 			if (!cfg)
 				return;
 
+			cfg.m_rVehicleCatalog = "{9AEE90193DC1A534}Configs/EntityCatalog/ARGH_AmbientVehicles.conf";
 			cfg.m_bRulesIgnoreSpawnpointLabels = true;
 			cfg.m_fSpawnChance = 0.369;
 			cfg.m_iLongCooldownMultiplier = 10;
@@ -447,10 +451,10 @@
 			}
 		}
 
-		private static void FlattenEnabledGroups(array<ref ARGH_AmbientVehicleGroup> groups, array<ref ARGH_AmbientVehicleSpawnRule> outRules, bool parentEnabled)
-		{
-			if (!groups || !outRules)
-				return;
+	private static void FlattenEnabledGroups(array<ref ARGH_AmbientVehicleGroup> groups, array<ref ARGH_AmbientVehicleSpawnRule> outRules, bool parentEnabled)
+	{
+		if (!groups || !outRules)
+			return;
 
 			foreach (ARGH_AmbientVehicleGroup g : groups)
 			{
@@ -885,6 +889,31 @@
 				return;
 			}
 
+			map<string, ref ARGH_AmbientVehicleSpawnRule> existingByPrefab = new map<string, ref ARGH_AmbientVehicleSpawnRule>();
+			array<ref ARGH_AmbientVehicleGroup> existingGroups = {};
+			if (bc.Get("m_aGroups", existingGroups) && existingGroups.Count() > 0)
+			{
+				array<ref ARGH_AmbientVehicleSpawnRule> existingFlat = {};
+				FlattenAllGroups(existingGroups, existingFlat);
+				foreach (ARGH_AmbientVehicleSpawnRule rule : existingFlat)
+				{
+					if (!rule || rule.m_rPrefab.IsEmpty())
+						continue;
+					existingByPrefab.Set(rule.m_rPrefab, rule);
+				}
+			}
+
+			array<ref ARGH_AmbientVehicleSpawnRule> existingRules = {};
+			if (bc.Get("m_aVehicles", existingRules) && existingRules.Count() > 0)
+			{
+				foreach (ARGH_AmbientVehicleSpawnRule rule : existingRules)
+				{
+					if (!rule || rule.m_rPrefab.IsEmpty())
+						continue;
+					existingByPrefab.Set(rule.m_rPrefab, rule);
+				}
+			}
+
 			map<string, ResourceName> uniqueResources = new map<string, ResourceName>();
 			int fromRegistries = CollectVehiclePrefabsFromPlaceableRegistries(cfg, uniqueResources);
 			int fromEt = CollectVehiclePrefabsFromAllEt(cfg, uniqueResources);
@@ -932,6 +961,17 @@
 				rule.m_rPrefab = resName;
 				rule.m_bEnabled = true;
 				rule.m_fSpawnWeight = 1.0;
+				rule.m_iSupplyCost = 0;
+
+				ARGH_AmbientVehicleSpawnRule existingRule;
+				if (existingByPrefab.Find(resName, existingRule) && existingRule)
+				{
+					rule.m_bEnabled = existingRule.m_bEnabled;
+					rule.m_fSpawnWeight = existingRule.m_fSpawnWeight;
+					rule.m_iSupplyCost = existingRule.m_iSupplyCost;
+					if (!existingRule.m_sDisplayName.IsEmpty())
+						rule.m_sDisplayName = existingRule.m_sDisplayName;
+				}
 				modelGroup.m_aVehicles.Insert(rule);
 			}
 
@@ -1068,6 +1108,16 @@
 		{
 			m_SavedFaction = faction;
 
+			// If a flying spawnpoint ends up here, defer to base behavior to avoid ground catalog selection.
+			if (ARGH_SCR_AmbientFlyingVehicleSpawnPointComponent.Cast(this))
+			{
+				super.Update(faction);
+				return;
+			}
+
+			// Preserve base selection logic before overriding with catalog, if available.
+			super.Update(faction);
+
 			ARGH_AmbientVehicleSpawnConfig cfg = GetAmbientVehicleSpawnConfig();
 			bool dbg = (cfg && cfg.m_bDebugLogCatalog);
 
@@ -1097,8 +1147,32 @@
 				}
 			}
 
-			m_sPrefab = string.Empty;
 			if (dbg)
-				Print("[ARGH_VEHICLE_CATALOG] No catalog selection available -> no spawn");
+				Print("[ARGH_VEHICLE_CATALOG] No catalog selection available -> keeping base selection");
+		}
+	}
+
+	static void FlattenAllGroups(array<ref ARGH_AmbientVehicleGroup> groups, array<ref ARGH_AmbientVehicleSpawnRule> outRules)
+	{
+		if (!groups || !outRules)
+			return;
+
+		foreach (ARGH_AmbientVehicleGroup g : groups)
+		{
+			if (!g)
+				continue;
+
+			if (g.m_aVehicles)
+			{
+				foreach (ARGH_AmbientVehicleSpawnRule r : g.m_aVehicles)
+				{
+					if (!r)
+						continue;
+					outRules.Insert(r);
+				}
+			}
+
+			if (g.m_aChildren)
+				FlattenAllGroups(g.m_aChildren, outRules);
 		}
 	}

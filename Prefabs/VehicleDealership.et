@@ -1,0 +1,68 @@
+SCR_DestructibleBuildingEntity : "{D2A960D237D786F5}Prefabs/Structures/Commercial/FuelStations/FuelStation_E_01/HouseAddons/FuelStation_E_01_building_base.et" {
+ ID "F0DBA538AC2A0552"
+ coords 124.034 0 135.161
+ angles 0 -180 0
+ {
+  GenericEntity : "{2990AB9DCE64226B}Prefabs/trader.et" {
+   ID "68744A06ECF15A32"
+   components {
+    ARGH_VehicleDealerComponent "{0ED393C2E42B4D3C}" {
+     m_sSpawnPointEntityName "VehicleTraderSpawner"
+    }
+    SCR_DestructionMultiPhaseComponent "{5496C1EF00137501}" {
+     Enabled 0
+    }
+    ActionsManagerComponent "{686C13E1F3226869}" {
+     Enabled 0
+     ActionContexts {
+      UserActionContext "{686C13E1E3797C93}" {
+       ContextName "InteractionPoint"
+       Position PointInfo "{6C54C3C6B2F5C4A4}" {
+        Offset 0 0.15 0.1
+       }
+      }
+      UserActionContext "{686C13E1E32D051C}" {
+       ContextName "default"
+       Position PointInfo "{8B98B8B3A9A4EF1B}" {
+        Offset 0 0.15 0.1
+       }
+      }
+     }
+     additionalActions {
+      ARGH_OpenVehicleDealerAction "{686C13E1DD623A86}" {
+       ParentContextList +{
+       }
+       UIInfo UIInfo "{6C54C3C6B2F5C4A6}" {
+        Name "Open Vehicle Dealer"
+       }
+       ActionTitle "Open Vehicle Dealer"
+       VisibilityRange 5
+      }
+     }
+    }
+    RplComponent "{566CB016AAC374C6}" {
+     Enabled 0
+    }
+    Hierarchy "{569AF601019A3DF3}" {
+     PivotID "socket_sign_01"
+    }
+   }
+   coords 0.776 1.271 0.797
+   angles 0 -1.088 0
+  }
+  $grp DecalEntity : "{B38FBA56FA69E392}Prefabs/Decals/Fluids/Decal_OilStain_01_large.et" {
+   {
+    ID "68744A06ECF15A31"
+    coords -0.391 -0.035 4.3
+    angles -89.98 -129.117 0
+    scale 2.686
+   }
+   {
+    ID "68744A06ECF1E6C8"
+    coords -10.245 -0.459 8.926
+    angles -89.98 -129.117 0
+    scale 2.686
+   }
+  }
+ }
+}

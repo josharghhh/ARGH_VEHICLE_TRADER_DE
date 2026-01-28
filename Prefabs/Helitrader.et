@@ -1,0 +1,55 @@
+GenericEntity : "{45BD065FEF334A8A}Prefabs/Structures/Signs/Warnings/SignNoEntryVehicle_01.et" {
+ ID "50D67C36F4200F97"
+ components {
+  ARGH_VehicleDealerComponent "{686D7EB84643C3D2}" {
+   m_sDealerName "Flying Vehicle Dealership"
+   m_sDealerConfigPath "{2C71C3035C6E7EE4}Configs/Systems/ARGH_FlyingVehicleDealer.conf"
+   m_sSpawnPointEntityName ""
+   m_bForceOverlayUI 0
+  }
+  MeshObject "{54969A6AAAADA251}" {
+   Object "{BEDD92A0FE73BE6C}Assets/Structures/BuildingsParts/Signs/SignAirport_Eden_01/SignAirport_Eden_01.xob"
+  }
+  SCR_DestructionMultiPhaseComponent "{5496C1EF00137501}" {
+   Enabled 0
+  }
+  ActionsManagerComponent "{686D7EB84643C3CC}" {
+   ActionContexts {
+    UserActionContext "{686D7EB84643C3C7}" {
+     ContextName "InteractionPoint"
+     Position PointInfo "{686D7EB84643C3C5}" {
+      Offset 0 0.15 0.1
+     }
+    }
+    UserActionContext "{686D7EB84643C3BB}" {
+     ContextName "default"
+     Position PointInfo "{686D7EB846431585}" {
+      Offset 0 0.15 0.1
+     }
+    }
+   }
+   additionalActions {
+    ARGH_OpenVehicleDealerAction "{686D7EB846431581}" {
+     ParentContextList {
+      "InteractionPoint" "default"
+     }
+     UIInfo UIInfo "{686D7EB846431583}" {
+      Name "Open Vehicle Dealer"
+     }
+     ActionTitle "Open Vehicle Dealer"
+     VisibilityRange 5
+    }
+   }
+  }
+  RplComponent "{566CB016AAC374C6}" {
+   Enabled 0
+  }
+  RplComponent "{686D7EB84643158F}" {
+  }
+  Hierarchy "{569AF601019A3DF3}" {
+   PivotID "socket_sign_01"
+  }
+ }
+ coords 129.455 1.889 129.537
+ angles 0 -90 0
+}

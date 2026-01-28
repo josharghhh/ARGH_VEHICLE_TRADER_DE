@@ -1,0 +1,9 @@
+MatPBRBasic {
+ Emissive 0.204 0.084 0.01 0
+ EmissiveLV 3.084
+ SpecularMul 2.57
+ RoughnessScale 1.802
+ EmissiveMap "{E862B6FDFA5195AB}Assets/Sign/ARGHSIGN_e.edds"
+ BCRMap "{C964AECB591B6D1E}Assets/Sign/ARGHSIGN_BCR.edds"
+ NMOMap "{F1BC1559806C3F80}Assets/Sign/ARGHSIGN_NMO.edds"
+}

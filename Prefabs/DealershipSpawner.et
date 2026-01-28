@@ -1,0 +1,14 @@
+GenericEntity {
+ ID "6874AB6749133CCB"
+ editor EntityEditorProps "{6874AB6753AF1331}" {
+ }
+ coords 126.358 1 124.094
+ {
+  DecalEntity : "{B38FBA56FA69E392}Prefabs/Decals/Fluids/Decal_OilStain_01_large.et" {
+   ID "6874AB6749133CC8"
+   coords -0.03 0 0.17
+   angles -89.98 -129.117 0
+   scale 2.686
+  }
+ }
+}

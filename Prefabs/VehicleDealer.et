@@ -1,0 +1,42 @@
+SCR_ChimeraCharacter : "{79E55BE2B5EE102C}Prefabs/Characters/DE_Examples/DE_Trader_General.et" {
+ ID "520EC961A090B1EE"
+ components {
+  ARGH_VehicleDealerComponent "{68744A0D130ADEFD}" {
+   m_sDealerConfigPath "{A4C3C7A4D1E8F2B0}Configs/Systems/ARGH_VehicleDealer_Vehicles.conf"
+   m_sSpawnPointEntityName "VehicleTraderSpawner"
+   m_fSpawnBehindDistance 10
+  }
+  DE_TraderComponent "{6708699D817EFCF0}" {
+   Enabled 0
+   traderName "Vehicle Dealership"
+  }
+  SCR_EditableCharacterComponent "{520EA1D2F659C85C}" {
+   m_UIInfo SCR_EditableEntityUIInfo "{5298E609432D192D}" {
+    Name "Vehicle Dealership"
+   }
+  }
+  SCR_CharacterIdentityComponent "{5584CBC63E092DBC}" {
+   Identity Identity "{5584CBC6363C648B}" {
+    Name "Vehicle"
+    Surname "Trader"
+   }
+  }
+  ActionsManagerComponent "{520EA1D2F659CE02}" {
+   additionalActions {
+    ARGH_OpenVehicleDealerAction "{68744A0D7A143F5E}" {
+     ParentContextList {
+      "InteractionPoint" "default"
+     }
+     UIInfo UIInfo "{6C54C3C6B2F5C4A6}" {
+      Name "Open Vehicle Dealer"
+      Icon "{8657510D7940031F}UI/Textures/Workshop/DownloadManager/DownloadManager_DownloadingIcon_UI.edds"
+     }
+     ActionTitle "Open Vehicle Dealer"
+     VisibilityRange 5
+    }
+   }
+  }
+ }
+ coords 4278.529 409.345 5806.003
+ angles 0 47.04 0
+}

@@ -15,8 +15,8 @@ class ARGH_VehicleDealerServiceComponent : SCR_BaseGameModeComponent
 	protected static ARGH_VehicleDealerServiceComponent s_pInstance;
 	
 	// Rate limiting
-	static const int PURCHASE_OP_MAX = 3;
-	static const int PURCHASE_OP_WINDOW_SEC = 10;
+	static const int PURCHASE_OP_MAX_DEFAULT = 3;
+	static const int PURCHASE_OP_WINDOW_SEC_DEFAULT = 10;
 	
 	// ========================================================================
 	// SECTION: MEMBER VARIABLES
@@ -24,6 +24,12 @@ class ARGH_VehicleDealerServiceComponent : SCR_BaseGameModeComponent
 	
 	protected ref ARGH_RateLimiter m_pRateLimiter;
 	protected RplComponent m_RplComponent;
+
+	[Attribute(defvalue: "3", uiwidget: UIWidgets.EditBox, desc: "Max purchases per time window", category: "Rate Limiting")]
+	protected int m_iPurchaseOpMax;
+
+	[Attribute(defvalue: "10", uiwidget: UIWidgets.EditBox, desc: "Rate limit window (seconds)", category: "Rate Limiting")]
+	protected int m_iPurchaseOpWindowSec;
 	
 	// ========================================================================
 	// SECTION: SINGLETON & INITIALIZATION
@@ -43,6 +49,7 @@ class ARGH_VehicleDealerServiceComponent : SCR_BaseGameModeComponent
 		s_pInstance = this;
 		
 		m_RplComponent = RplComponent.Cast(owner.FindComponent(RplComponent));
+		ARGH_VehicleDealerMenuContext.Reset();
 		
 		if (!Replication.IsServer())
 			return;
@@ -73,7 +80,13 @@ class ARGH_VehicleDealerServiceComponent : SCR_BaseGameModeComponent
 		// Rate limit check
 		string rlKey = string.Format("vehicle_purchase_%1", playerId);
 		int retryAfter;
-		if (!m_pRateLimiter.TryConsume(rlKey, PURCHASE_OP_MAX, PURCHASE_OP_WINDOW_SEC, retryAfter))
+		int maxOps = m_iPurchaseOpMax;
+		if (maxOps <= 0)
+			maxOps = PURCHASE_OP_MAX_DEFAULT;
+		int windowSec = m_iPurchaseOpWindowSec;
+		if (windowSec <= 0)
+			windowSec = PURCHASE_OP_WINDOW_SEC_DEFAULT;
+		if (!m_pRateLimiter.TryConsume(rlKey, maxOps, windowSec, retryAfter))
 		{
 			errorReason = "rate_limited";
 			Print(string.Format("VehicleDealer: Rate limited player %1", playerId), LogLevel.WARNING);
@@ -197,7 +210,8 @@ class ARGH_VehicleDealerServiceComponent : SCR_BaseGameModeComponent
 				price,
 				v.m_sCategory,
 				v.m_iSeats,
-				v.m_bRequiresLicense
+				v.m_bRequiresLicense,
+				v.m_sThumbnailPath
 			);
 			result.Insert(dto);
 		}

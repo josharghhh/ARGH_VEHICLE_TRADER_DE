@@ -1,0 +1,8 @@
+GenericEntity : "{5289199F2D9EBAE5}Prefabs/Systems/AmbientVehicles/ARGHAmbientVehicleSpawnpoint_Base.et" {
+ ID "5D5E85F95F31C6F0"
+ components {
+  ARGH_AmbientVehiclePrefabBootstrapComponent "{686AAE78A9872B95}" {
+   Enabled 0
+  }
+ }
+}

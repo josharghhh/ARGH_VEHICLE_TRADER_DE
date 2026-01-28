@@ -22,6 +22,9 @@ class ARGH_VehicleForSale : Managed
 	[Attribute(defvalue: "0", uiwidget: UIWidgets.CheckBox, desc: "Requires license", category: "Vehicle")]
 	bool m_bRequiresLicense;
 
+	[Attribute(defvalue: "", uiwidget: UIWidgets.ResourcePickerThumbnail, params: "edds", desc: "Thumbnail image (edds)", category: "UI")]
+	ResourceName m_sThumbnailPath;
+
 	[Attribute(defvalue: "1", uiwidget: UIWidgets.CheckBox, desc: "Enable vehicle", category: "Vehicle")]
 	bool m_bEnabled;
 
@@ -58,6 +61,9 @@ class ARGH_VehiclePriceOverride : Managed
 
 	[Attribute(defvalue: "0", uiwidget: UIWidgets.CheckBox, desc: "Requires license override", category: "Override")]
 	bool m_bRequiresLicense;
+
+	[Attribute(defvalue: "", uiwidget: UIWidgets.ResourcePickerThumbnail, params: "edds", desc: "Thumbnail override (edds)", category: "Override")]
+	ResourceName m_sThumbnailPath;
 
 	[Attribute(defvalue: "1", uiwidget: UIWidgets.CheckBox, desc: "Enable override", category: "Override")]
 	bool m_bEnabled;
@@ -202,16 +208,38 @@ class ARGH_VehicleDealerConfig : Managed
 		if (!bc)
 			return;
 
-		array<ref ARGH_AmbientVehicleGroup> groups = {};
-		array<ref ARGH_AmbientVehicleSpawnRule> rules = {};
-		bool hasGroups = bc.Get("m_aGroups", groups);
-		bool hasRules = bc.Get("m_aVehicles", rules);
+		string catalogPath = m_rAmbientCatalog.GetPath();
+		string catalogPathLower = catalogPath;
+		catalogPathLower.ToLower();
+		bool isFlyingCatalog = catalogPathLower.Contains("flying");
 
 		array<ref ARGH_AmbientVehicleSpawnRule> flatRules = {};
-		if (hasGroups && groups.Count() > 0)
-			FlattenAmbientGroups(groups, flatRules, true);
-		else if (hasRules && rules.Count() > 0)
-			flatRules = rules;
+		array<ref ARGH_AmbientFlyingVehicleSpawnRule> flatFlyingRules = {};
+
+		if (!isFlyingCatalog)
+		{
+			array<ref ARGH_AmbientVehicleGroup> groups = {};
+			array<ref ARGH_AmbientVehicleSpawnRule> rules = {};
+			bool hasGroups = bc.Get("m_aGroups", groups);
+			bool hasRules = bc.Get("m_aVehicles", rules);
+
+			if (hasGroups && groups.Count() > 0)
+				FlattenAmbientGroups(groups, flatRules, true);
+			else if (hasRules && rules.Count() > 0)
+				flatRules = rules;
+		}
+		else
+		{
+			array<ref ARGH_AmbientFlyingVehicleGroup> flyingGroups = {};
+			array<ref ARGH_AmbientFlyingVehicleSpawnRule> flyingRules = {};
+			bool hasFlyingGroups = bc.Get("m_aGroups", flyingGroups);
+			bool hasFlyingRules = bc.Get("m_aVehicles", flyingRules);
+
+			if (hasFlyingGroups && flyingGroups.Count() > 0)
+				FlattenAmbientFlyingGroups(flyingGroups, flatFlyingRules, true);
+			else if (hasFlyingRules && flyingRules.Count() > 0)
+				flatFlyingRules = flyingRules;
+		}
 
 		map<string, ref ARGH_VehiclePriceOverride> overrides = BuildOverrideMap();
 
@@ -224,9 +252,35 @@ class ARGH_VehicleDealerConfig : Managed
 			v.m_sPrefab = rule.m_rPrefab;
 			v.m_sDisplayName = rule.m_sDisplayName;
 			v.m_sCategory = "Civilian";
-			v.m_iPrice = m_iDefaultPrice;
+			if (rule.m_iSupplyCost > 0)
+				v.m_iPrice = rule.m_iSupplyCost;
+			else
+				v.m_iPrice = m_iDefaultPrice;
 			v.m_iSeats = 4;
 			v.m_bRequiresLicense = false;
+			v.m_sThumbnailPath = string.Empty;
+			v.m_bEnabled = true;
+
+			ApplyOverride(v, overrides);
+			outByPrefab.Set(v.m_sPrefab, v);
+		}
+
+		foreach (ARGH_AmbientFlyingVehicleSpawnRule rule : flatFlyingRules)
+		{
+			if (!rule || !rule.m_bEnabled || rule.m_fSpawnWeight <= 0.0)
+				continue;
+
+			ARGH_VehicleForSale v = new ARGH_VehicleForSale();
+			v.m_sPrefab = rule.m_rPrefab;
+			v.m_sDisplayName = rule.m_sDisplayName;
+			v.m_sCategory = "Civilian";
+			if (rule.m_iSupplyCost > 0)
+				v.m_iPrice = rule.m_iSupplyCost;
+			else
+				v.m_iPrice = m_iDefaultPrice;
+			v.m_iSeats = 4;
+			v.m_bRequiresLicense = false;
+			v.m_sThumbnailPath = string.Empty;
 			v.m_bEnabled = true;
 
 			ApplyOverride(v, overrides);
@@ -268,6 +322,8 @@ class ARGH_VehicleDealerConfig : Managed
 			v.m_sDisplayName = o.m_sDisplayName;
 		v.m_iSeats = o.m_iSeats;
 		v.m_bRequiresLicense = o.m_bRequiresLicense;
+		if (!o.m_sThumbnailPath.IsEmpty())
+			v.m_sThumbnailPath = o.m_sThumbnailPath;
 		v.m_bEnabled = o.m_bEnabled;
 	}
 
@@ -298,6 +354,36 @@ class ARGH_VehicleDealerConfig : Managed
 
 			if (g.m_aChildren)
 				FlattenAmbientGroups(g.m_aChildren, outRules, enabled);
+		}
+	}
+
+	//------------------------------------------------------------------------------------------------
+	protected void FlattenAmbientFlyingGroups(array<ref ARGH_AmbientFlyingVehicleGroup> groups, array<ref ARGH_AmbientFlyingVehicleSpawnRule> outRules, bool parentEnabled)
+	{
+		if (!groups || !outRules)
+			return;
+
+		foreach (ARGH_AmbientFlyingVehicleGroup g : groups)
+		{
+			if (!g)
+				continue;
+
+			bool enabled = parentEnabled && g.m_bEnabled;
+			if (!enabled)
+				continue;
+
+			if (g.m_aVehicles)
+			{
+				foreach (ARGH_AmbientFlyingVehicleSpawnRule r : g.m_aVehicles)
+				{
+					if (!r)
+						continue;
+					outRules.Insert(r);
+				}
+			}
+
+			if (g.m_aChildren)
+				FlattenAmbientFlyingGroups(g.m_aChildren, outRules, enabled);
 		}
 	}
 }

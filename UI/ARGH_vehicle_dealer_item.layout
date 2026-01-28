@@ -1,54 +1,140 @@
 ButtonWidgetClass {
  Name "VehicleItemButton"
  Slot LayoutSlot "{ARGH-VD-ITEM-SLOT}" {
-  Padding 0 0 0 6
+  Padding 0 0 0 8
+  SizeMode Fill
+  FillWeight 1
  }
+ Color 0 0 0 0
  style blank
+ components {
+  SCR_ButtonTextComponent {
+   m_bMouseOverToFocus 1
+  }
+  SCR_ModularButtonComponent {
+   m_aEffects {
+    SCR_ButtonEffectColor {
+     m_eEvents 6144
+     m_sWidgetName "VehicleItemBg"
+     m_fAnimationTime 0.1
+     m_cFocusGained 0.16 0.17 0.21 0.85
+     m_cFocusLost 0.12 0.13 0.16 0.75
+    }
+    SCR_ButtonEffectColor {
+     m_eEvents 6144
+     m_sWidgetName "VehicleItemName"
+     m_fAnimationTime 0.1
+     m_cFocusGained 0.18 0.8 0.78 1
+     m_cFocusLost 0.94 0.95 0.97 1
+    }
+    SCR_ButtonEffectColor {
+     m_eEvents 6144
+     m_sWidgetName "VehicleItemPrice"
+     m_fAnimationTime 0.1
+     m_cFocusGained 0.18 0.8 0.78 1
+     m_cFocusLost 0.94 0.95 0.97 1
+    }
+   }
+   m_bFocusOnMouseEnter 1
+  }
+ }
  {
-  OverlayWidgetClass {
+  OverlayWidgetClass "{6874206B3DF9A21D}" {
    Name "VehicleItemOverlay"
-   Slot ButtonWidgetSlot {
+   Slot ButtonWidgetSlot "{6874206B3DF9A2FA}" {
     HorizontalAlign 3
     VerticalAlign 3
    }
    {
-    ImageWidgetClass {
+    ImageWidgetClass "{6874206B3DF9A2F5}" {
      Name "VehicleItemBg"
-     Slot OverlayWidgetSlot {
+     Slot OverlayWidgetSlot "{6874206B3DF9A2DE}" {
       HorizontalAlign 3
       VerticalAlign 3
-     }
-     Color 0.03 0.035 0.04 1
     }
-    HorizontalLayoutWidgetClass {
-     Name "VehicleItemRow"
-     Slot OverlayWidgetSlot {
+    Color 0.12 0.13 0.16 0.75
+   }
+    VerticalLayoutWidgetClass "{6874206B3DF9A2B8}" {
+     Name "VehicleItemColumn"
+     Slot OverlayWidgetSlot "{6874206B3DF9A2B7}" {
       HorizontalAlign 3
       VerticalAlign 3
-      Padding 10 6 10 6
+      Padding 12 8 12 8
      }
      {
-      TextWidgetClass {
-       Name "VehicleItemName"
-       Slot LayoutSlot {
-        SizeMode Fill
-        FillWeight 1
-        Padding 0 0 6 0
+      SizeLayoutWidgetClass "{6874206B3DF9A2AD}" {
+       Name "VehicleItemRowSize"
+       Slot LayoutSlot "{6874206B3DF9A299}" {
        }
-       Color 0.85 0.85 0.85 1
-       Text "Vehicle"
-       "Font Size" 13
+       AllowHeightOverride 1
+       HeightOverride 28
+       {
+        HorizontalLayoutWidgetClass "{6874206B3DF9A28B}" {
+         Name "VehicleItemRow"
+         Slot LayoutSlot "{6874206B3DF9A280}" {
+          SizeMode Fill
+         }
+         {
+          TextWidgetClass "{6874206B3DF9A371}" {
+           Name "VehicleItemName"
+           Slot LayoutSlot "{6874206B3DF9A36E}" {
+            Padding 0 0 6 0
+            SizeMode Fill
+            FillWeight 1
+           }
+           Color 0.94 0.95 0.97 1
+           Text "Vehicle"
+           "Font Size" 14
+          }
+          TextWidgetClass "{6874206B3DF9A358}" {
+           Name "VehicleItemPrice"
+           Slot LayoutSlot "{6874206B3DF9A353}" {
+            SizeMode Fill
+            FillWeight 0
+           }
+           Color 0.94 0.95 0.97 1
+           Text "$0"
+           "Font Size" 14
+           "Horizontal Alignment" Right
+          }
+         }
+        }
+       }
       }
-      TextWidgetClass {
-       Name "VehicleItemPrice"
-       Slot LayoutSlot {
-        SizeMode Fill
-        FillWeight 0
+      SizeLayoutWidgetClass "{6874206B3DF9A342}" {
+       Name "VehicleItemPreviewSize"
+       Slot LayoutSlot "{6874206B3DF9A346}" {
+        Padding 0 0 0 0
        }
-       Color 0.55 0.8 0.55 1
-       Text "$0"
-       "Font Size" 13
-       "Horizontal Alignment" Right
+       AllowHeightOverride 1
+       HeightOverride 0
+       {
+        OverlayWidgetClass "{6874206B3DF9A338}" {
+         Name "VehicleItemPreviewOverlay"
+         Slot AlignableSlot "{6874206B3DF9A335}" {
+          HorizontalAlign 3
+          VerticalAlign 3
+         }
+         {
+          ItemPreviewWidgetClass "{6874206B3DF9A323}" {
+           Name "VehicleItemPreview3D"
+           Slot OverlayWidgetSlot "{6874206B3DF9A31F}" {
+            HorizontalAlign 3
+            VerticalAlign 3
+           }
+           Color 0.02 0.025 0.03 1
+          }
+          ImageWidgetClass "{6874206B3DF9A316}" {
+           Name "VehicleItemPreviewImage"
+           Slot OverlayWidgetSlot "{6874206B3DF9A309}" {
+            HorizontalAlign 3
+            VerticalAlign 3
+           }
+           Color 0.02 0.025 0.03 1
+          }
+         }
+        }
+       }
       }
      }
     }

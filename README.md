@@ -1,30 +1,45 @@
+<p align="center">
+  <img src="thumbnailarge.png" alt="ARGH Ambient Vehicle Plugin" width="600">
+</p>
+
 # ARGH Ambient Vehicle Plugin
 
-Ambient vehicle spawning + ARGH vehicle trader with DynamicEconomy support.
+Friendly user guide for ambient vehicle spawning and the ARGH vehicle dealer.
 
-## Features
-- Ambient ground and flying vehicle spawners with catalog building.
-- Vehicle dealer UI (menu + overlay fallback).
-- Server authoritative purchase flow with rate limiting.
-- Wallet + bank payments via DynamicEconomy resources.
-- Spawn purchased vehicles at a marker or behind the player.
-- Config driven vehicle catalogs with ambient import + overrides.
+## Contents
+- What This Mod Does
+- Requirements
+- Quick Start (Dealer)
+- Dealer Config (Main Settings)
+- Set Price For Every Vehicle (Default Price)
+- Set Price Per Vehicle (Catalog Override)
+- Spawn Behavior (Where Purchased Vehicles Appear)
+- Buy Cooldown (Rate Limit)
+- UI Feedback
+- Ambient Vehicle Catalogs (Ground + Flying)
+- Troubleshooting
+
+## What This Mod Does
+- Spawns ambient ground and flying vehicles using editable catalogs.
+- Adds a vehicle dealer (menu + overlay) that sells vehicles for cash.
+- Supports DynamicEconomy wallet + bank payments.
+- Lets you set a single price for all vehicles or per-vehicle prices.
 
 ## Requirements
 - Arma Reforger (Workbench for editing).
-- DynamicEconomy: https://github.com/wyqydsyq/DynamicEconomy
+- DynamicEconomy (wallet + bank). If missing, purchases will fail.
 
 ## Quick Start (Dealer)
-1) Add `ARGH_VehicleDealerServiceComponent` to your GameMode entity (server authority).
-2) Place a dealer prefab in a world:
-   - `Prefabs/VehicleTrader.et` (sign)
-   - `Prefabs/veicletradtet.et` (sign + pole)
-   - `Prefabs/trader.et` (alternate sign)
-3) Ensure the dealer component points at your config:
+1) Make sure your GameMode has the dealer service component.
+2) Place a dealer prefab in the world (signs/terminals):
+   - `Prefabs/VehicleTrader.et`
+   - `Prefabs/veicletradtet.et`
+   - `Prefabs/trader.et`
+3) Confirm the dealer points at a config:
    - `Configs/Systems/ARGH_VehicleDealer_Vehicles.conf`
-4) Launch, approach the sign, and use the `Open Vehicle Dealer` action.
+4) Launch, walk up to the sign, and use `Open Vehicle Dealer`.
 
-## Dealer Configuration
+## Dealer Config (Main Settings)
 File: `Configs/Systems/ARGH_VehicleDealer_Vehicles.conf`
 
 Key fields:
@@ -53,139 +68,151 @@ ARGH_VehicleDealerConfig {
 }
 ```
 
-## Spawn Behavior
-Component: `Scripts/Game/ARGH/Dealer/ARGH_VehicleDealerComponent.c`
+## Set Price For Every Vehicle (Default Price)
+Use `m_iDefaultPrice` in the dealer config. Any vehicle with no per-item
+override will use this price.
 
-Attributes on the dealer entity:
+## Set Price Per Vehicle (Catalog Override)
+Add `m_iSupplyCost` to entries in the ambient catalogs.
+Set it to `0` to use the dealer default price.
+
+Works for both catalogs:
+- Ground: `Configs/EntityCatalog/ARGH_AmbientVehicles.conf`
+- Flying: `Configs/EntityCatalog/ARGH_AmbientFlyingVehicles.conf`
+
+Example (ground):
+```conf
+ARGH_AmbientVehicleSpawnRule {
+ m_sDisplayName "BTR70  [Prefabs/Vehicles/Wheeled/BTR70/BTR70.et]"
+ m_rPrefab "{C012BB3488BEA0C2}Prefabs/Vehicles/Wheeled/BTR70/BTR70.et"
+ m_bEnabled 1
+ m_fSpawnWeight 1
+ m_iSupplyCost 150
+}
+```
+
+Notes:
+- Catalog rebuild preserves `m_iSupplyCost`, `m_bEnabled`, `m_fSpawnWeight`,
+  and custom display names.
+- If `m_iSupplyCost` is 0, the dealer default price is used.
+
+## Spawn Behavior (Where Purchased Vehicles Appear)
+Dealer component fields (on the dealer entity prefab):
 - `m_bSpawnOnPurchase` / `m_bAddToGarage`
-- `m_sSpawnPointEntityName` (optional world marker name)
+- `m_sSpawnPointEntityName` (optional marker name)
 - `m_fSpawnBehindDistance` (fallback distance)
-- `m_vSpawnLocalOffset` (local offset for fine tuning)
+- `m_vSpawnLocalOffset` (fine tuning)
 - `m_bForceOverlayUI` (skip menu preset, use overlay)
 
-If no spawn marker is provided, the vehicle spawns behind the player.
+If no spawn marker is set, the vehicle spawns behind the player.
 
-## Economy Integration
-Uses DynamicEconomy cash containers:
-- Wallet: character `SCR_ResourceComponent` cash container.
-- Bank: player controller `SCR_ResourceComponent` cash container.
+## Buy Cooldown (Rate Limit)
+Configured on the GameMode service component:
+File: `Prefabs/MP/Modes/GameMode_Base.et`
 
-Payment logic attempts wallet first, then bank. Both are updated with
-`NotifyPlayerDataChange`.
+Fields:
+- `m_iPurchaseOpMax` (max purchases per window)
+- `m_iPurchaseOpWindowSec` (window length in seconds)
 
-## UI Notes
-Layouts:
-- `UI/ARGH_menu_vehicle_dealer.layout`
-- `UI/ARGH_vehicle_dealer_item.layout`
-- `UI/ARGH_vehicle_category_button.layout`
+Default: 3 purchases per 10 seconds.
 
-Menu preset is registered in `Configs/System/chimeraMenus.conf` as
-`ARGH_VehicleDealerMenuUI`. If the preset fails or is forced off, the overlay
-UI is used.
+## UI Feedback
+Buy button feedback on purchase result:
+- Success: white flash + `SOUND_FE_BUTTON_SELECT`
+- Failure: orange/red flash + `SOUND_FE_BUTTON_HOVER`
 
-Input handling:
-- Menu uses `MenuContext` and disables movement, view, and weapon controls.
-- ESC or F closes the menu (via input listeners).
-- Cursor is kept alive per frame for mouse input stability.
-
-## Ambient Vehicle System
-Ground:
-- `Scripts/Game/ARGH/Server/Components/Locations/ARGH_AmbientVehicleSpawnPointComponent.c`
-- Config: `Configs/Systems/ARGH_AmbientVehicleSpawn.conf`
-
-Flying:
-- `Scripts/Game/ARGH/Server/Components/Locations/ARGH_AmbientFlyingSpawnPointComponent.c`
-- Config: `Configs/Systems/ARGH_AmbientFlyingVehicleSpawn.conf`
-
-Workbench tools:
-- `Scripts/WorkbenchGame/WorldEditor/ARGH_AmbientVehicleCatalogPlugin.c`
-- `Scripts/WorkbenchGame/WorldEditor/ARGH_AmbientFlyingVehicleCatalogPlugin.c`
-
-These rebuild the ambient catalogs used by the dealer import.
-
-## ARGH Dealer Implementation
-Core dealer logic:
-- `Scripts/Game/ARGH/Dealer/ARGH_VehicleDealerComponent.c`
-- `Scripts/Game/ARGH/Dealer/ARGH_VehicleDealerServiceComponent.c`
-- `Scripts/Game/ARGH/Dealer/ARGH_VehicleDealerConfig.c`
-- `Scripts/Game/ARGH/Dealer/Dtos/ARGH_VehicleForSaleDto.c`
-- `Scripts/Game/ARGH/Dealer/Server/Utils/ARGH_RateLimiter.c`
-
-UI + actions:
-- `Scripts/Game/ARGH/Dealer/UI/ARGH_OpenVehicleDealerAction.c`
-- `Scripts/Game/ARGH/Dealer/UI/ARGH_VehicleDealerMenuContext.c`
+Change colors or sounds here:
 - `Scripts/Game/ARGH/Dealer/UI/ARGH_VehicleDealerMenuUI.c`
 - `Scripts/Game/ARGH/Dealer/UI/ARGH_VehicleDealerOverlayUI.c`
 
-Legacy or extra UI:
-- `Scripts/Game/ARGH/Dealer/UI/ARGH_VehicleCardWidget.c`
+## Dealer Menu Controls (Keyboard/Controller/Mouse)
+**Keyboard**
+- **Up/Down**: move selection
+- **Enter**: purchase
+- **Left/Right**: switch category
+- **Esc**: close
 
-Prefabs:
-- `Prefabs/VehicleTrader.et`
-- `Prefabs/veicletradtet.et`
-- `Prefabs/trader.et`
+**Controller**
+- **D‑Pad / Arrows**: move selection
+- **A / Enter**: purchase
+- **B / Esc**: back
 
-## ARGH Usage in This Mod
-This mod uses ARGH as the vehicle trader layer that connects:
-- Dealer prefabs (signs/terminals) -> `ARGH_OpenVehicleDealerAction`.
-- UI (menu or overlay) -> dealer config + economy.
-- Server authority -> validated purchases + spawning.
+**Mouse**
+- Click to select
+- Click **Purchase** to buy
+- Hover shows highlight only (does not change selection)
 
-Key integration points:
-- Config import: `ARGH_VehicleDealerConfig` can import ambient catalogs and apply
-  overrides, so the dealer can reuse ambient spawn lists with prices.
-- Economy: `ARGH_VehicleDealerComponent` and
-  `ARGH_VehicleDealerServiceComponent` read wallet + bank from
-  `SCR_ResourceComponent` (DynamicEconomy cash).
-- Spawn: dealer component supports spawn marker name or "spawn behind player"
-  with local offsets.
-- UI: menu preset (`ARGH_VehicleDealerMenuUI`) with overlay fallback if preset
-  fails or is forced off.
+![Dealer menu UI](Screenshots/dealermenuui.png)
 
-## Changes Made for This Mod (ARGH)
-The following ARGH scripts are used or updated to fit this mod's behavior:
-- `Scripts/Game/ARGH/Dealer/ARGH_VehicleDealerConfig.c`
-  - Adds ambient catalog import, default pricing, and per-prefab overrides.
-- `Scripts/Game/ARGH/Dealer/ARGH_VehicleDealerComponent.c`
-  - Loads config on client/server.
-  - Local catalog + purchase fallback when no Rpl server is present.
-  - Spawn behind player or named spawn marker with local offsets.
-  - DynamicEconomy wallet/bank payment flow.
-- `Scripts/Game/ARGH/Dealer/ARGH_VehicleDealerServiceComponent.c`
-  - Server-authoritative purchase handling + rate limiting.
-  - Spawns purchased vehicle and/or adds to garage (stub).
-- `Scripts/Game/ARGH/Dealer/Dtos/ARGH_VehicleForSaleDto.c`
-  - DTO used for client catalog UI.
-- `Scripts/Game/ARGH/Dealer/Server/Utils/ARGH_RateLimiter.c`
-  - Fixed-window server anti-spam for purchases.
-- `Scripts/Game/ARGH/Dealer/UI/*`
-  - Menu + overlay UI, input handling, and action hooking.
+## Ambient Vehicle Catalogs (Ground + Flying)
+Ground config:
+- `Configs/Systems/ARGH_AmbientVehicleSpawn.conf`
+Flying config:
+- `Configs/Systems/ARGH_AmbientFlyingVehicleSpawn.conf`
 
-## Rewriting Notes
-We can use this implementation as a reference and rewrite a cleaner
-version for your needs. Recommended approach:
-1) Define the desired data model and config schema first (dealer, catalog,
-   price rules, economy).
-2) Write a thin interface layer for economy + garage so it can be swapped.
-3) Keep UI thin (pure presentation), and drive it from DTOs.
-4) Move spawn logic into a dedicated service with clear inputs/outputs.
+Workbench rebuild tools:
+- `Scripts/WorkbenchGame/WorldEditor/ARGH_AmbientVehicleCatalogPlugin.c`
+- `Scripts/WorkbenchGame/WorldEditor/ARGH_AmbientFlyingVehicleCatalogPlugin.c`
 
-If you want, tell me the target architecture you want (e.g., strict client UI,
-server only logic, or full local fallback), and I'll draft a rewrite plan.
+These rebuild the catalog files used by the dealer import.
+
+## Workbench Plugin (Catalog Rebuild)
+In Workbench, use the plugin to rebuild catalogs:
+- Menu: **ARGH Ambient Vehicle Catalog** (ground)
+- Menu: **ARGH Ambient Flying Vehicle Catalog** (air)
+
+These are also exposed via the “Rebuild Vehicle Catalog” button inside the plugin.
 
 ## Troubleshooting
-- Wrong GUID for resource .layout or .conf: ensure `.meta` files exist and match
-  the resource GUIDs; re-save the asset if needed.
-- Menu will not open: confirm `ARGH_VehicleDealerServiceComponent` is on the
-  GameMode and the menu preset exists in `Configs/System/chimeraMenus.conf`.
-- Action not visible: verify `ActionsManagerComponent` has `InteractionPoint`
-  and `default` contexts with `ARGH_OpenVehicleDealerAction`.
-- Spawn fails: check `m_sSpawnPointEntityName` and spawn offsets.
-- Script authorization popups: Workbench prompts for
-  `BaseContainerTools.LoadContainer` from core scripts; click "Yes to All".
+- Dealer says "Economy service unavailable": DynamicEconomy not running.
+- "Invalid vehicle pricing": price is 0 or missing.
+- "You don't have enough money": wallet + bank are both low.
+- UI not opening: ensure menu preset exists or force overlay.
 
-## Dev Notes
-- Rate limiting: 3 purchases per 10 seconds per player
-  (`ARGH_VehicleDealerServiceComponent`).
-- Local fallback: if not in Rpl or server mode, the dealer builds catalog and
-  purchases locally.
+## Screenshots & Setup Examples
+Quick visual references, placed next to the topics they match.
+
+### Dealer UI
+_What players see in game._
+![Dealer UI](Screenshots/dealer.png)
+
+### Dealer Config (Vehicles)
+_How the dealer pulls in catalogs and overrides._
+![Dealer config](Screenshots/dealerconfig.png)
+
+### Ambient Spawner Config
+_Spawner setup and catalog assignment._
+![Ambient spawners](Screenshots/ambientspawners.png)
+
+### Catalog Variants Pulled From Prefabs
+_Auto‑generated catalog variants from prefab scan._
+![Catalog variants](Screenshots/configvarientspulled.png)
+
+### Custom Setup Examples
+_Example custom layouts and tweaks._
+![Custom setups](Screenshots/customsetups.png)
+
+### Workbench Plugin
+_Plugin menu entry for rebuild._
+![Workbench plugin](Screenshots/wbplugin.png)
+
+### Workbench Setup Example
+_Example Workbench setup and catalog rebuild flow._
+![Workbench setup example](Screenshots/wbsetupeg.png)
+
+## Manual Adjustments (Enable/Disable + Tuning)
+Common manual edits you can do safely:
+- **Enable/disable categories or vehicles**: set `m_bEnabled` to `0` or `1` in
+  `Configs/EntityCatalog/ARGH_AmbientVehicles.conf` and
+  `Configs/EntityCatalog/ARGH_AmbientFlyingVehicles.conf`.
+- **Adjust spawn weighting**: set `m_fSpawnWeight` per vehicle rule.
+- **Override price per vehicle**: set `m_iSupplyCost` in catalog entries.
+- **Default price**: `m_iDefaultPrice` in dealer config.
+- **Import rules**: `m_bUseAmbientCatalog` and `m_rAmbientCatalog`.
+- **Buy cooldown**: `m_iPurchaseOpMax` and `m_iPurchaseOpWindowSec` in
+  `Prefabs/MP/Modes/GameMode_Base.et`.
+## Change Notes (2026-01-28)
+- Added per-vehicle price override (`m_iSupplyCost`) to ambient catalogs.
+- Dealer import reads catalog prices for ground and flying.
+- Catalog rebuild preserves price, enabled flag, spawn weight, and display name.
+- Buy button flashes and plays UI sounds on purchase result.

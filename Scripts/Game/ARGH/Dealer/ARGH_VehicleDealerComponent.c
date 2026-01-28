@@ -285,6 +285,7 @@ class ARGH_VehicleDealerComponent : ScriptComponent
 		array<string> categories = {};
 		array<int> seats = {};
 		array<bool> licenses = {};
+		array<string> thumbnails = {};
 		
 		foreach (ARGH_VehicleForSaleDto dto : catalog)
 		{
@@ -294,10 +295,11 @@ class ARGH_VehicleDealerComponent : ScriptComponent
 			categories.Insert(dto.m_sCategory);
 			seats.Insert(dto.m_iSeats);
 			licenses.Insert(dto.m_bRequiresLicense);
+			thumbnails.Insert(dto.m_sThumbnailPath);
 		}
 		
 		// Send to requesting player
-		Rpc(RpcDo_SendVehicleCatalog, playerId, prefabs, names, prices, categories, seats, licenses);
+		Rpc(RpcDo_SendVehicleCatalog, playerId, prefabs, names, prices, categories, seats, licenses, thumbnails);
 	}
 	
 	//------------------------------------------------------------------------------------------------
@@ -346,7 +348,7 @@ class ARGH_VehicleDealerComponent : ScriptComponent
 	
 	//------------------------------------------------------------------------------------------------
 	[RplRpc(RplChannel.Reliable, RplRcver.Broadcast)]
-	protected void RpcDo_SendVehicleCatalog(int playerId, array<string> prefabs, array<string> names, array<int> prices, array<string> categories, array<int> seats, array<bool> licenses)
+	protected void RpcDo_SendVehicleCatalog(int playerId, array<string> prefabs, array<string> names, array<int> prices, array<string> categories, array<int> seats, array<bool> licenses, array<string> thumbnails)
 	{
 		if (playerId != SCR_PlayerController.GetLocalPlayerId())
 			return;
@@ -365,6 +367,8 @@ class ARGH_VehicleDealerComponent : ScriptComponent
 			dto.m_sCategory = categories[i];
 			dto.m_iSeats = seats[i];
 			dto.m_bRequiresLicense = licenses[i];
+			if (thumbnails && i < thumbnails.Count())
+				dto.m_sThumbnailPath = thumbnails[i];
 			dto.m_bInStock = true;
 			m_aCachedCatalog.Insert(dto);
 		}
@@ -447,7 +451,8 @@ class ARGH_VehicleDealerComponent : ScriptComponent
 				price,
 				v.m_sCategory,
 				v.m_iSeats,
-				v.m_bRequiresLicense
+				v.m_bRequiresLicense,
+				v.m_sThumbnailPath
 			);
 			result.Insert(dto);
 		}

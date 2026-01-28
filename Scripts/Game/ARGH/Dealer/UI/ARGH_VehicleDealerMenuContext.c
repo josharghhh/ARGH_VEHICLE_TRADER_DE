@@ -42,6 +42,13 @@ class ARGH_VehicleDealerMenuContext
 	}
 
 	//------------------------------------------------------------------------------------------------
+	static void Reset()
+	{
+		s_rDealerId = RplId.Invalid();
+		s_bMenuOpen = false;
+	}
+
+	//------------------------------------------------------------------------------------------------
 	static void SetMenuOpen(bool isOpen)
 	{
 		s_bMenuOpen = isOpen;

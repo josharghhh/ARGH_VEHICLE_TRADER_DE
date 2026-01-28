@@ -1,0 +1,18 @@
+StaticModelEntity : "{B2BFCED67A5B9898}Prefabs/Structures/Airport/LightRunway_03/LightRunway_03_base.et" {
+ ID "F0DBA538AC2A0552"
+ components {
+  SCR_DestructionMultiPhaseComponent "{66A8E7DF1FD279A1}" {
+   m_DestroySpawnObjects {
+    SCR_DebrisSpawnable "{66A8E7DECA4DD7D6}" : "{1EE9F8F556A0DDE9}Configs/Destruction/MultiphaseDestruction/FX_Debris/FX_Debris_Metal_Pole.conf" {
+     m_ModelPrefabs {
+      "{8152D3A7918397C5}Assets/Structures/Airport/LightRunway_03/Dst/LightRunway_03_dst_05.xob" "{1F8B906FEAE21C96}Assets/Structures/Airport/LightRunway_03/Dst/LightRunway_03_dst_01.xob" "{869529F6F7052D06}Assets/Structures/Airport/LightRunway_03/Dst/LightRunway_03_dst_02.xob" "{F19F417E03A7C276}Assets/Structures/Airport/LightRunway_03/Dst/LightRunway_03_dst_03.xob" "{F658BB2F652178B5}Assets/Structures/Airport/LightRunway_03/Dst/LightRunway_03_dst_04.xob"
+     }
+    }
+   }
+   m_eMaterialSoundType BREAK_METAL_POLE
+  }
+ }
+ coords 0.159 -0.972 0.02
+ angles 0 -180 0
+ scale 0.116
+}
